@@ -1,7 +1,7 @@
 export const portfolioData = {
   profile: {
     name: "HARTHIK ROYAL MALLICHETTY",
-    title: "DATA INTELLIGENCE ENGINEER",
+    title: "DATA ANALYST",
     email: "harthikmallichetty@gmail.com",
     github: "github.com/harthikrm",
     linkedin: "linkedin.com/in/harthikrm",
