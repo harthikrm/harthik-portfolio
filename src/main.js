@@ -87,7 +87,7 @@ const renderContent = () => {
         <div class="container hero-content">
           <span class="hero-label">SYSTEM STATUS: OPERATIONAL // V.2.0.26</span>
           <h1>
-            <span>DATA ANALYST</span>
+            <span>DATA <br>ANALYST</span>
           </h1>
           <p class="hero-tagline">Pipelines. Models. Decisions. May 2026.</p>
           <div class="role-switcher">
