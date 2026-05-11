@@ -3,6 +3,10 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { createIcons, Monitor, PieChart, Users, Database, Cpu, Mail, ArrowRight, FileText, Download } from 'lucide'
 import { portfolioData } from './data'
+import { inject } from '@vercel/analytics'
+
+// Initialize Vercel Analytics
+inject()
 
 gsap.registerPlugin(ScrollTrigger)
 
