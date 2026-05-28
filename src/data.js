@@ -190,12 +190,12 @@ export const portfolioData = {
   ],
 
   resumes: [
-    { title: "Data Analyst", slug: "data_analyst" },
-    { title: "Data Scientist", slug: "data_scientist" },
-    { title: "Data Engineer", slug: "data_engineer" },
-    { title: "BI Analyst", slug: "bi_analyst" },
-    { title: "People Analytics", slug: "people_analytics" },
-    { title: "Quant Analyst", slug: "quant_analyst" }
+    { title: "AI Engineer", file: "HarthikRoyalMallichetty_AIEngineer.pdf" },
+    { title: "Analytics Engineer", file: "HarthikRoyalMallichetty_AnalyticsEngineer.pdf" },
+    { title: "Data Analyst", file: "HarthikRoyalMallichetty_DataAnalyst.pdf" },
+    { title: "Data Engineer", file: "HarthikRoyalMallichetty_DataEngineer.pdf" },
+    { title: "People Analytics", file: "HarthikRoyalMallichetty_PeopleAnalytics.pdf" },
+    { title: "Quant Research Analyst", file: "HarthikRoyalMallichetty_QuantResearchAnalyst.pdf" }
   ],
 
   experience: [

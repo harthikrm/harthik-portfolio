@@ -50,7 +50,7 @@ const renderApp = (isInitial = false) => {
           <h2 class="section-title">Which role are you hiring for?</h2>
           <div class="resume-grid">
             ${portfolioData.resumes.map(r => `
-              <a href="/resumes/harthik_mallichetty_${r.slug}.pdf" download class="resume-card magnetic-wrap">
+              <a href="/resumes/${r.file}" download class="resume-card magnetic-wrap">
                 <div class="resume-card-inner">
                   <i data-lucide="file-text"></i>
                   <span class="resume-role">${r.title}</span>
