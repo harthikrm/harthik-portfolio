@@ -653,6 +653,7 @@ main, footer {
     font-size: 2rem;
     margin-bottom: 2rem;
   }
+} /* end @media (max-width: 1024px) */
 
 /* Project Live Demo Link */
 .project-title-wrap {
