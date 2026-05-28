@@ -20,6 +20,20 @@ export const portfolioData = {
 
   projects: [
     {
+      id: "signal",
+      title: "Signal — Financial Intelligence Platform",
+      description: "Production RAG system where any investor asks a question in plain English and gets a verified, cited answer from SEC filings in seconds. No analyst required.",
+      image: "signal_financial_intelligence_platform.png",
+      tags: ["AI", "DE"],
+      metrics: {
+        "S&P 500 COVERAGE": "70 Companies",
+        "RAG PIPELINE": "10-Step",
+        "METRICS/COMPANY": "65"
+      },
+      tech: ["Python", "FastAPI", "PostgreSQL", "pgvector", "dbt", "Airflow", "Voyage AI", "GPT-4o-mini", "GCP", "React", "LangSmith"],
+      link: "https://signal.harthik.dev"
+    },
+    {
       id: "job-search-auto",
       title: "Job Search Automation Pipeline",
       description: "Automated end-to-end job discovery pipeline using GPT-4o-mini for hyper-personalized resume tailoring.",
