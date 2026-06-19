@@ -820,21 +820,14 @@ main, footer {
   margin-left: 0.5rem;
 }
 
-/* ── Pixel Pets — site-wide playground ──────────────────────────── */
+/* ── Pixel Pets — page-relative playground ───────────────────────── */
 
-/* Fixed overlay: roamers live here and stay on screen while scrolling */
-.pet-world {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 15;        /* above content, well below nav (1000) */
-  overflow: hidden;
-}
-
-/* Each roamer: x-movement on wrapper, y-movement on the canvas inside */
+/* Each roamer is a direct child of its section, so it scrolls with the page */
 .pet-roamer {
   position: absolute;
   left: 0;
+  pointer-events: none;
+  z-index: 10;        /* above section content, below sticky nav */
   will-change: transform;
 }
 

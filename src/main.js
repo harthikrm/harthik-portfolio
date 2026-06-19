@@ -82,6 +82,7 @@ const renderApp = (isInitial = false) => {
   initializeInteractions()
   initializeIcons()
   if (hasInitialized) initializeAnimations()
+  if (hasInitialized) _initSectionPets()
   if (hasInitialized) _placePerchers()
 }
 
@@ -363,6 +364,51 @@ const _makePetCanvas = (key, flip = false, yAnim = '') => {
   return c
 }
 
+// Section pets: attached to page sections so they scroll with the content
+// Re-called after each renderApp() to handle role-switch re-renders
+const _initSectionPets = () => {
+  // Remove any existing section pets before re-adding
+  document.querySelectorAll('[data-sp]').forEach(p => p.remove())
+
+  const addPets = (sel, pets) => {
+    const section = document.querySelector(sel)
+    if (!section) return
+    // Needs position context so absolute children are relative to this section
+    if (!section.style.position) section.style.position = 'relative'
+    pets.forEach(r => {
+      const wrap = document.createElement('div')
+      wrap.className = `pet-roamer pr-${r.dir} ${r.spd}`
+      wrap.setAttribute('data-sp', '')
+      wrap.style.cssText = `bottom:${r.bot};animation-delay:${r.delay};`
+      wrap.appendChild(_makePetCanvas(r.key, r.flip, r.yAnim))
+      section.appendChild(wrap)
+    })
+  }
+
+  // Hero: cat and bot walk near the bottom of the big landing section
+  addPets('.hero', [
+    { key:'cat',  flip:false, dir:'ltr', spd:'pr-slow',   bot:'14%', yAnim:'',                                      delay:'0s'   },
+    { key:'bot',  flip:true,  dir:'rtl', spd:'pr-medium', bot:'9%',  yAnim:'',                                      delay:'-5s'  },
+  ])
+
+  // Cases: duck bounces and frog leaps across the project list
+  addPets('.cases', [
+    { key:'duck', flip:false, dir:'ltr', spd:'pr-medium', bot:'2%',  yAnim:'pet-bounce 1.1s ease-in-out infinite', delay:'-3s'  },
+    { key:'frog', flip:false, dir:'ltr', spd:'pr-slow',   bot:'1%',  yAnim:'pet-jump 2.3s ease-in-out infinite',   delay:'-13s' },
+  ])
+
+  // About: ghost drifts through mid-section, bunny scurries along the floor
+  addPets('.about', [
+    { key:'ghost', flip:false, dir:'ltr', spd:'pr-vslow', bot:'48%', yAnim:'pet-float 3.2s ease-in-out infinite',  delay:'-2s'  },
+    { key:'bunny', flip:true,  dir:'rtl', spd:'pr-fast',  bot:'4%',  yAnim:'pet-bounce 0.9s ease-in-out infinite', delay:'-7s'  },
+  ])
+
+  // Resumes: one more duck trots across the resume picker
+  addPets('.resumes', [
+    { key:'duck', flip:true, dir:'rtl', spd:'pr-medium', bot:'6%', yAnim:'pet-bounce 1.3s ease-in-out infinite', delay:'-9s' },
+  ])
+}
+
 // Perchers sit on specific DOM elements; re-called after each renderApp()
 const _placePerchers = () => {
   document.querySelectorAll('.pet-percher').forEach(p => p.remove())
@@ -402,31 +448,7 @@ const _placePerchers = () => {
 }
 
 const initializePixelPets = () => {
-  if (document.querySelector('.pet-world')) return
-
-  // Fixed overlay — pets roam the entire viewport regardless of scroll
-  const world = document.createElement('div')
-  world.className = 'pet-world'
-  document.body.appendChild(world)
-
-  // dir: ltr/rtl  bot: bottom offset  yAnim: vertical motion on canvas  delay: stagger
-  const ROAMERS = [
-    { key:'cat',   flip:false, dir:'ltr', spd:'pr-slow',   bot:'7vh',  yAnim:'',                                       delay:'0s'   },
-    { key:'duck',  flip:false, dir:'ltr', spd:'pr-medium', bot:'3vh',  yAnim:'pet-bounce 1.1s ease-in-out infinite',  delay:'-6s'  },
-    { key:'bot',   flip:true,  dir:'rtl', spd:'pr-medium', bot:'5vh',  yAnim:'',                                       delay:'-3s'  },
-    { key:'frog',  flip:false, dir:'ltr', spd:'pr-slow',   bot:'2vh',  yAnim:'pet-jump 2.3s ease-in-out infinite',   delay:'-14s' },
-    { key:'ghost', flip:false, dir:'ltr', spd:'pr-vslow',  bot:'40vh', yAnim:'pet-float 3.2s ease-in-out infinite',  delay:'-2s'  },
-    { key:'bunny', flip:true,  dir:'rtl', spd:'pr-fast',   bot:'13vh', yAnim:'pet-bounce 0.9s ease-in-out infinite', delay:'-9s'  },
-  ]
-
-  ROAMERS.forEach(r => {
-    const wrap = document.createElement('div')
-    wrap.className = `pet-roamer pr-${r.dir} ${r.spd}`
-    wrap.style.cssText = `bottom:${r.bot};animation-delay:${r.delay};`
-    wrap.appendChild(_makePetCanvas(r.key, r.flip, r.yAnim))
-    world.appendChild(wrap)
-  })
-
+  _initSectionPets()
   _placePerchers()
 }
 
