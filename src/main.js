@@ -151,8 +151,12 @@ const initializeIntro = () => {
     .call(() => {
       hasInitialized = true
       initializeAnimations()
+      initializePixelPets()
     })
 }
+
+const GH_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58 0-.28-.01-1.03-.02-2.02-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22 0 1.6-.01 2.9-.01 3.29 0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>`
+const EXT_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`
 
 const renderProjects = (role) => {
   const projects = role === 'ALL'
@@ -168,10 +172,10 @@ const renderProjects = (role) => {
         </div>
         <h2 class="project-title-wrap">
           ${p.title}
-          ${p.link && p.link !== '#' ? `<a href="${p.link}" target="_blank" rel="noopener noreferrer" class="project-live-link" title="${p.link.includes('github') ? 'View on GitHub' : 'Live Demo'}">
-            ${p.link.includes('github') ? `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58 0-.28-.01-1.03-.02-2.02-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22 0 1.6-.01 2.9-.01 3.29 0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>`
-            : `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`}
-          </a>` : ''}
+          <span class="project-links">
+            ${p.link && p.link !== '#' ? `<a href="${p.link}" target="_blank" rel="noopener noreferrer" class="project-live-link" title="${p.link.includes('github') ? 'View on GitHub' : 'Live Demo'}">${p.link.includes('github') ? GH_ICON : EXT_ICON}</a>` : ''}
+            ${p.github ? `<a href="${p.github}" target="_blank" rel="noopener noreferrer" class="project-live-link project-gh-link" title="View on GitHub">${GH_ICON}</a>` : ''}
+          </span>
         </h2>
         <p class="case-description">${p.description}</p>
         <div class="metric-grid">
@@ -287,6 +291,93 @@ const initializeIcons = () => {
   } catch (e) {
     console.warn('Lucide icons load bypass')
   }
+}
+
+// ── Pixel Pets ────────────────────────────────────────────────────
+const initializePixelPets = () => {
+  const hero = document.querySelector('.hero')
+  if (!hero || document.querySelector('.pixel-pets-container')) return
+
+  const S = 5 // px per "pixel"
+
+  // Each pet: { pixels: [[row]], palette: [body, shadow, detail], frames: 2 }
+  // 0=transparent, 1=body, 2=shadow/detail, 3=highlight
+  const PETS = [
+    {
+      name: 'cat',
+      palette: ['#c084fc', '#7c3aed', '#f0abfc'],
+      speed: 18,
+      bottom: '18%',
+      facing: 1,
+      frames: [
+        [[0,0,1,0,1,0,0],[0,1,1,1,1,1,0],[1,1,3,1,1,3,1],[1,1,1,1,1,1,1],[0,1,2,1,1,2,1],[0,1,0,0,0,1,0],[0,1,0,0,0,1,0]],
+        [[0,0,1,0,1,0,0],[0,1,1,1,1,1,0],[1,1,3,1,1,3,1],[1,1,1,1,1,1,1],[0,1,2,1,1,2,1],[0,0,1,0,0,0,1],[0,0,1,0,0,0,1]]
+      ]
+    },
+    {
+      name: 'bot',
+      palette: ['#60a5fa', '#1d4ed8', '#bfdbfe'],
+      speed: 24,
+      bottom: '12%',
+      facing: -1,
+      frames: [
+        [[0,1,1,1,1,1,0],[1,3,1,1,1,3,1],[1,1,1,1,1,1,1],[0,0,1,1,1,0,0],[0,1,1,1,1,1,0],[0,1,0,1,1,0,1],[0,0,1,0,0,1,0]],
+        [[0,1,1,1,1,1,0],[1,3,1,1,1,3,1],[1,1,1,1,1,1,1],[0,0,1,1,1,0,0],[0,1,1,1,1,1,0],[0,0,1,0,0,1,0],[0,0,0,1,1,0,0]]
+      ]
+    },
+    {
+      name: 'duck',
+      palette: ['#fbbf24', '#d97706', '#fef3c7'],
+      speed: 14,
+      bottom: '25%',
+      facing: 1,
+      frames: [
+        [[0,0,1,1,0,0,0],[0,1,3,1,1,0,0],[0,1,1,1,1,0,0],[0,1,1,1,0,0,0],[1,1,1,1,1,1,0],[1,1,1,1,1,1,1],[0,1,1,1,1,0,0],[0,0,1,0,1,0,0]],
+        [[0,0,1,1,0,0,0],[0,1,3,1,1,0,0],[0,1,1,1,1,0,0],[0,1,1,1,0,0,0],[1,1,1,1,1,1,0],[1,1,1,1,1,1,1],[0,1,1,1,1,0,0],[0,0,0,1,0,0,0]]
+      ]
+    }
+  ]
+
+  const drawPet = (canvas, frames, palette, frameIdx) => {
+    const ctx = canvas.getContext('2d')
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    const rows = frames[frameIdx]
+    rows.forEach((row, y) => {
+      row.forEach((px, x) => {
+        if (!px) return
+        ctx.fillStyle = palette[px - 1]
+        ctx.fillRect(x * S, y * S, S, S)
+      })
+    })
+  }
+
+  const container = document.createElement('div')
+  container.className = 'pixel-pets-container'
+  hero.appendChild(container)
+
+  PETS.forEach((pet) => {
+    const rows = pet.frames[0].length
+    const cols = pet.frames[0][0].length
+    const wrap = document.createElement('div')
+    wrap.className = `pixel-pet pixel-pet--${pet.name}`
+    wrap.style.cssText = `bottom:${pet.bottom};animation-duration:${pet.speed}s;`
+    if (pet.facing === -1) wrap.style.animationName = 'pet-walk-rtl'
+
+    const canvas = document.createElement('canvas')
+    canvas.width = cols * S
+    canvas.height = rows * S
+    canvas.style.imageRendering = 'pixelated'
+    if (pet.facing === -1) canvas.style.transform = 'scaleX(-1)'
+    wrap.appendChild(canvas)
+    container.appendChild(wrap)
+
+    let frame = 0
+    drawPet(canvas, pet.frames, pet.palette, frame)
+    setInterval(() => {
+      frame = (frame + 1) % pet.frames.length
+      drawPet(canvas, pet.frames, pet.palette, frame)
+    }, 350)
+  })
 }
 
 // Final bootstrap

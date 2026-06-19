@@ -31,13 +31,14 @@ export const portfolioData = {
         "METRICS/COMPANY": "65"
       },
       tech: ["Python", "FastAPI", "PostgreSQL", "pgvector", "dbt", "Airflow", "Voyage AI", "GPT-4o-mini", "GCP", "React", "LangSmith"],
-      link: "https://signal.harthik.dev"
+      link: "https://signal.harthik.dev",
+      github: "https://github.com/harthikrm/signal-financial-intelligence"
     },
     {
       id: "code-sentinel",
       title: "Code Sentinel",
       description: "Fine-tuned Mistral-7B on 143K real reviewer comments to automate code review on every pull request. Outperforms GPT-4o-mini. Deployed on Google Vertex AI with a GitHub Action that posts AI-generated reviews automatically.",
-      image: "code_sentinel.png",
+      image: "code-sentinel.png",
       tags: ["ML", "AI"],
       featured: true,
       metrics: {
@@ -74,7 +75,7 @@ export const portfolioData = {
         "RECORDS": "21K/DAY"
       },
       tech: ["Python", "Pandas", "SQL", "Tableau"],
-      link: "#"
+      github: "https://github.com/harthikrm/quant-risk-desk"
     },
     {
       id: "f1-intel",
@@ -88,7 +89,7 @@ export const portfolioData = {
         "ACCURACY": "94%"
       },
       tech: ["Python", "PostgreSQL", "FastAPI", "React"],
-      link: "#"
+      github: "https://github.com/harthikrm/f1-race-intelligence"
     },
     {
       id: "supply-chain",
@@ -102,7 +103,7 @@ export const portfolioData = {
         "DISRUPTION DETECTION": "100%"
       },
       tech: ["Python", "NetworkX", "GraphDB"],
-      link: "#"
+      github: "https://github.com/harthikrm/global-supply-chain-intelligence"
     },
     {
       id: "iot-analytics",
@@ -116,7 +117,7 @@ export const portfolioData = {
         "ROC-AUC": "0.96"
       },
       tech: ["Python", "MQTT", "Grafana"],
-      link: "#"
+      github: "https://github.com/harthikrm/smart-home-analytics"
     },
     {
       id: "nlp-fake-news",
@@ -144,7 +145,7 @@ export const portfolioData = {
         "MERCHANTS": "1200"
       },
       tech: ["SQL", "Python", "Tableau"],
-      link: "#"
+      github: "https://github.com/harthikrm/merchant-credit-risk-fraud-monitoring"
     },
     {
       id: "recruiting-analytics",
@@ -158,7 +159,7 @@ export const portfolioData = {
         "OFFER ACCEPTANCE": "75%"
       },
       tech: ["Power BI", "SQL", "Python"],
-      link: "#"
+      github: "https://github.com/harthikrm/recruiting-funnel-analytics"
     },
     {
       id: "ats-integrity",
@@ -172,7 +173,7 @@ export const portfolioData = {
         "STAGE EVENTS": "30K+"
       },
       tech: ["Python", "PostgreSQL", "Power BI"],
-      link: "#"
+      github: "https://github.com/harthikrm/data-integrity-sla-monitoring-framework"
     },
     {
       id: "customer-churn",
@@ -186,7 +187,7 @@ export const portfolioData = {
         "MODEL": "XGBoost"
       },
       tech: ["Python", "Scikit-Learn", "Matplotlib"],
-      link: "#"
+      github: "https://github.com/harthikrm/churn-analytics-project"
     },
     {
       id: "retail-forecast",
