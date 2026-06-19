@@ -119,12 +119,16 @@ const renderContent = () => {
                 <p class="bio-statement">${portfolioData.profile.summary}</p>
                 <div class="bio-details">
                    <div class="detail-item">
-                      <span class="detail-label">Graduation</span>
-                      <span class="detail-value">May 2026</span>
+                      <span class="detail-label">Graduated</span>
+                      <span class="detail-value">May 2026 · UT Dallas</span>
                    </div>
                    <div class="detail-item">
                       <span class="detail-label">Domain</span>
-                      <span class="detail-value">Analytics · ML · Data Engineering</span>
+                      <span class="detail-value">AI · ML · Data Engineering</span>
+                   </div>
+                   <div class="detail-item status-available">
+                      <span class="detail-label">Status</span>
+                      <span class="detail-value"><span class="status-dot"></span>Available for FTE Now</span>
                    </div>
                 </div>
              </div>
@@ -156,13 +160,17 @@ const renderProjects = (role) => {
     : portfolioData.projects.filter(p => p.tags.includes(role))
 
   return projects.map((p, i) => `
-    <div class="case-item ${i % 2 !== 0 ? 'reverse' : ''}" id="${p.id}">
+    <div class="case-item ${i % 2 !== 0 ? 'reverse' : ''}${p.featured ? ' featured-item' : ''}" id="${p.id}">
       <div class="case-info">
-        <span class="case-tag">${p.tags.join(' / ')}</span>
+        <div class="case-tag-row">
+          <span class="case-tag">${p.tags.join(' / ')}</span>
+          ${p.featured ? '<span class="featured-badge">★ FEATURED</span>' : ''}
+        </div>
         <h2 class="project-title-wrap">
           ${p.title}
-          ${p.link && p.link !== '#' ? `<a href="${p.link}" target="_blank" rel="noopener noreferrer" class="project-live-link" title="Live Demo">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          ${p.link && p.link !== '#' ? `<a href="${p.link}" target="_blank" rel="noopener noreferrer" class="project-live-link" title="${p.link.includes('github') ? 'View on GitHub' : 'Live Demo'}">
+            ${p.link.includes('github') ? `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58 0-.28-.01-1.03-.02-2.02-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22 0 1.6-.01 2.9-.01 3.29 0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>`
+            : `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`}
           </a>` : ''}
         </h2>
         <p class="case-description">${p.description}</p>
@@ -174,6 +182,10 @@ const renderProjects = (role) => {
             </div>
           `).join('')}
         </div>
+        ${p.tech && p.tech.length ? `
+        <div class="tech-pills">
+          ${p.tech.map(t => `<span class="tech-pill">${t}</span>`).join('')}
+        </div>` : ''}
       </div>
       <div class="case-visual">
          <img src="/projects/${p.image}" alt="${p.title}" class="project-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">

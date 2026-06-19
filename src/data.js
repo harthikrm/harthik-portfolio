@@ -1,12 +1,12 @@
 export const portfolioData = {
   profile: {
-    name: "HARTHIK ROYAL MALLICHETTY",
-    title: "DATA ANALYST",
+    name: "HARTHIK MALLICHETTY",
+    title: "AI ENGINEER",
     email: "harthikmallichetty@gmail.com",
     github: "github.com/harthikrm",
     linkedin: "linkedin.com/in/harthikrm",
     location: "Dallas, TX",
-    summary: "I build data systems that turn ambiguous problems into decisions. From ML pipelines to financial risk models to LLM-powered workflows, every system I ship is designed to work in production, not just in notebooks.<br><br>Graduating May 2026. Ready to own problems from day one."
+    summary: "I build AI systems that replace manual, high-stakes work — from fine-tuning open-source LLMs to production RAG pipelines to financial risk infrastructure. Every system I ship runs in production, not just notebooks.<br><br>MS Business Analytics & AI, UT Dallas (May 2026). Available for full-time roles now."
   },
 
   roles: [
@@ -32,6 +32,21 @@ export const portfolioData = {
       },
       tech: ["Python", "FastAPI", "PostgreSQL", "pgvector", "dbt", "Airflow", "Voyage AI", "GPT-4o-mini", "GCP", "React", "LangSmith"],
       link: "https://signal.harthik.dev"
+    },
+    {
+      id: "code-sentinel",
+      title: "Code Sentinel",
+      description: "Fine-tuned Mistral-7B on 143K real reviewer comments to automate code review on every pull request. Outperforms GPT-4o-mini. Deployed on Google Vertex AI with a GitHub Action that posts AI-generated reviews automatically.",
+      image: "code_sentinel.png",
+      tags: ["ML", "AI"],
+      featured: true,
+      metrics: {
+        "BERTScore F1": "0.7470",
+        "vs GPT-4o-mini": "+6.1%",
+        "TRAINING EXAMPLES": "143K"
+      },
+      tech: ["Python", "PyTorch", "Mistral-7B", "QLoRA", "PEFT", "FastAPI", "Vertex AI", "W&B", "GitHub Actions"],
+      link: "https://github.com/harthikrm/code-sentinel"
     },
     {
       id: "job-search-auto",
