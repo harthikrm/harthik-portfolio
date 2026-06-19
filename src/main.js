@@ -82,6 +82,7 @@ const renderApp = (isInitial = false) => {
   initializeInteractions()
   initializeIcons()
   if (hasInitialized) initializeAnimations()
+  if (hasInitialized) _placePerchers()
 }
 
 const renderContent = () => {
@@ -294,90 +295,139 @@ const initializeIcons = () => {
 }
 
 // ── Pixel Pets ────────────────────────────────────────────────────
-const initializePixelPets = () => {
-  const hero = document.querySelector('.hero')
-  if (!hero || document.querySelector('.pixel-pets-container')) return
+// 0=transparent 1=body 2=shadow/dark 3=highlight/eye
+const PET_S = 5
 
-  const S = 5 // px per "pixel"
+const PET_ART = {
+  cat: {
+    pal: ['#c084fc','#7c3aed','#f0abfc'],
+    fr: [
+      [[0,0,1,0,1,0,0],[0,1,1,1,1,1,0],[1,1,3,1,1,3,1],[1,1,1,1,1,1,1],[0,1,2,1,1,2,1],[0,1,0,0,0,1,0],[0,1,0,0,0,1,0]],
+      [[0,0,1,0,1,0,0],[0,1,1,1,1,1,0],[1,1,3,1,1,3,1],[1,1,1,1,1,1,1],[0,1,2,1,1,2,1],[0,0,1,0,1,0,0],[0,0,0,1,0,1,0]],
+    ]
+  },
+  bot: {
+    pal: ['#60a5fa','#1d4ed8','#bfdbfe'],
+    fr: [
+      [[0,1,1,1,1,1,0],[1,3,1,1,1,3,1],[1,1,1,1,1,1,1],[0,0,1,1,1,0,0],[0,1,1,1,1,1,0],[0,1,0,1,0,1,0],[0,0,1,0,1,0,0]],
+      [[0,1,1,1,1,1,0],[1,3,1,1,1,3,1],[1,1,1,1,1,1,1],[0,0,1,1,1,0,0],[0,1,1,1,1,1,0],[0,0,1,0,0,1,0],[0,0,0,1,1,0,0]],
+    ]
+  },
+  duck: {
+    pal: ['#fbbf24','#d97706','#fef3c7'],
+    fr: [
+      [[0,0,1,1,0,0,0],[0,1,3,1,1,0,0],[0,1,1,1,1,0,0],[0,0,1,1,1,0,0],[0,1,1,1,1,1,0],[1,1,1,1,1,1,1],[0,1,1,1,1,0,0],[0,0,1,0,1,0,0]],
+      [[0,0,1,1,0,0,0],[0,1,3,1,1,0,0],[0,1,1,1,1,0,0],[0,0,1,1,1,0,0],[0,1,1,1,1,1,0],[1,1,1,1,1,1,1],[0,1,1,1,1,0,0],[0,0,0,1,0,0,0]],
+    ]
+  },
+  frog: {
+    pal: ['#4ade80','#15803d','#bbf7d0'],
+    fr: [
+      [[0,1,0,0,0,1,0],[1,1,1,1,1,1,1],[1,1,3,1,1,3,1],[0,1,1,2,1,1,0],[1,0,1,1,1,0,1],[1,0,0,0,0,0,1]],
+      [[0,1,0,0,0,1,0],[1,1,1,1,1,1,1],[1,1,3,1,1,3,1],[0,1,1,2,1,1,0],[0,1,0,0,0,1,0],[0,1,0,0,0,1,0]],
+    ]
+  },
+  ghost: {
+    pal: ['rgba(255,255,255,0.82)','rgba(147,197,253,0.65)','rgba(255,255,255,0.97)'],
+    fr: [
+      [[0,0,1,1,1,0,0],[0,1,1,1,1,1,0],[1,1,3,1,3,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,0,1,0,1,0,1]],
+      [[0,0,1,1,1,0,0],[0,1,1,1,1,1,0],[1,1,3,1,3,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[0,1,0,1,0,1,0]],
+    ]
+  },
+  bunny: {
+    pal: ['#fbcfe8','#db2777','#fdf2f8'],
+    fr: [
+      [[0,1,0,0,0,1,0],[0,1,0,0,0,1,0],[0,1,1,1,1,1,0],[1,1,3,1,1,3,1],[1,1,1,2,1,1,1],[0,1,1,1,1,1,0],[0,1,0,0,0,1,0],[0,0,1,0,1,0,0]],
+      [[1,1,0,0,0,0,0],[0,1,0,0,0,1,0],[0,1,1,1,1,1,0],[1,1,3,1,1,3,1],[1,1,1,2,1,1,1],[0,1,1,1,1,1,0],[0,0,1,0,0,1,0],[0,0,0,1,1,0,0]],
+    ]
+  },
+}
 
-  // Each pet: { pixels: [[row]], palette: [body, shadow, detail], frames: 2 }
-  // 0=transparent, 1=body, 2=shadow/detail, 3=highlight
-  const PETS = [
-    {
-      name: 'cat',
-      palette: ['#c084fc', '#7c3aed', '#f0abfc'],
-      speed: 18,
-      bottom: '18%',
-      facing: 1,
-      frames: [
-        [[0,0,1,0,1,0,0],[0,1,1,1,1,1,0],[1,1,3,1,1,3,1],[1,1,1,1,1,1,1],[0,1,2,1,1,2,1],[0,1,0,0,0,1,0],[0,1,0,0,0,1,0]],
-        [[0,0,1,0,1,0,0],[0,1,1,1,1,1,0],[1,1,3,1,1,3,1],[1,1,1,1,1,1,1],[0,1,2,1,1,2,1],[0,0,1,0,0,0,1],[0,0,1,0,0,0,1]]
-      ]
-    },
-    {
-      name: 'bot',
-      palette: ['#60a5fa', '#1d4ed8', '#bfdbfe'],
-      speed: 24,
-      bottom: '12%',
-      facing: -1,
-      frames: [
-        [[0,1,1,1,1,1,0],[1,3,1,1,1,3,1],[1,1,1,1,1,1,1],[0,0,1,1,1,0,0],[0,1,1,1,1,1,0],[0,1,0,1,1,0,1],[0,0,1,0,0,1,0]],
-        [[0,1,1,1,1,1,0],[1,3,1,1,1,3,1],[1,1,1,1,1,1,1],[0,0,1,1,1,0,0],[0,1,1,1,1,1,0],[0,0,1,0,0,1,0],[0,0,0,1,1,0,0]]
-      ]
-    },
-    {
-      name: 'duck',
-      palette: ['#fbbf24', '#d97706', '#fef3c7'],
-      speed: 14,
-      bottom: '25%',
-      facing: 1,
-      frames: [
-        [[0,0,1,1,0,0,0],[0,1,3,1,1,0,0],[0,1,1,1,1,0,0],[0,1,1,1,0,0,0],[1,1,1,1,1,1,0],[1,1,1,1,1,1,1],[0,1,1,1,1,0,0],[0,0,1,0,1,0,0]],
-        [[0,0,1,1,0,0,0],[0,1,3,1,1,0,0],[0,1,1,1,1,0,0],[0,1,1,1,0,0,0],[1,1,1,1,1,1,0],[1,1,1,1,1,1,1],[0,1,1,1,1,0,0],[0,0,0,1,0,0,0]]
-      ]
-    }
-  ]
+const _makePetCanvas = (key, flip = false, yAnim = '') => {
+  const art = PET_ART[key]
+  const rows = art.fr[0].length, cols = art.fr[0][0].length
+  const c = document.createElement('canvas')
+  c.width = cols * PET_S
+  c.height = rows * PET_S
+  c.style.cssText = `image-rendering:pixelated;display:block;${flip ? 'transform:scaleX(-1);' : ''}${yAnim ? `animation:${yAnim};` : ''}`
+  let f = 0
+  const draw = () => {
+    const ctx = c.getContext('2d')
+    ctx.clearRect(0, 0, c.width, c.height)
+    art.fr[f].forEach((row, y) => row.forEach((px, x) => {
+      if (px) { ctx.fillStyle = art.pal[px - 1]; ctx.fillRect(x * PET_S, y * PET_S, PET_S, PET_S) }
+    }))
+  }
+  draw()
+  setInterval(() => { f = (f + 1) % art.fr.length; draw() }, 380)
+  return c
+}
 
-  const drawPet = (canvas, frames, palette, frameIdx) => {
-    const ctx = canvas.getContext('2d')
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    const rows = frames[frameIdx]
-    rows.forEach((row, y) => {
-      row.forEach((px, x) => {
-        if (!px) return
-        ctx.fillStyle = palette[px - 1]
-        ctx.fillRect(x * S, y * S, S, S)
-      })
-    })
+// Perchers sit on specific DOM elements; re-called after each renderApp()
+const _placePerchers = () => {
+  document.querySelectorAll('.pet-percher').forEach(p => p.remove())
+
+  // Cat sits on the big hero heading
+  const h1 = document.querySelector('.hero h1')
+  if (h1) {
+    const p = document.createElement('div')
+    p.className = 'pet-percher'
+    p.style.cssText = 'position:absolute;bottom:90%;left:1%;z-index:5;pointer-events:none;'
+    p.appendChild(_makePetCanvas('cat', false, 'pet-idle-bob 2.1s ease-in-out infinite'))
+    h1.style.position = 'relative'
+    h1.appendChild(p)
   }
 
-  const container = document.createElement('div')
-  container.className = 'pixel-pets-container'
-  hero.appendChild(container)
+  // Duck perches on the bio statement in the About section
+  const bio = document.querySelector('.bio-statement')
+  if (bio) {
+    const p = document.createElement('div')
+    p.className = 'pet-percher'
+    p.style.cssText = 'position:absolute;top:-42px;right:6%;z-index:5;pointer-events:none;'
+    p.appendChild(_makePetCanvas('duck', false, 'pet-idle-bob 2.6s ease-in-out infinite 0.5s'))
+    bio.style.position = 'relative'
+    bio.appendChild(p)
+  }
 
-  PETS.forEach((pet) => {
-    const rows = pet.frames[0].length
-    const cols = pet.frames[0][0].length
+  // Ghost floats above the footer email
+  const footerEmail = document.querySelector('.footer-email')
+  if (footerEmail) {
+    const p = document.createElement('div')
+    p.className = 'pet-percher'
+    p.style.cssText = 'position:absolute;bottom:110%;right:2%;z-index:5;pointer-events:none;'
+    p.appendChild(_makePetCanvas('ghost', false, 'pet-float 3.5s ease-in-out infinite'))
+    const footer = footerEmail.closest('footer')
+    if (footer) { footer.style.position = 'relative'; footer.appendChild(p) }
+  }
+}
+
+const initializePixelPets = () => {
+  if (document.querySelector('.pet-world')) return
+
+  // Fixed overlay — pets roam the entire viewport regardless of scroll
+  const world = document.createElement('div')
+  world.className = 'pet-world'
+  document.body.appendChild(world)
+
+  // dir: ltr/rtl  bot: bottom offset  yAnim: vertical motion on canvas  delay: stagger
+  const ROAMERS = [
+    { key:'cat',   flip:false, dir:'ltr', spd:'pr-slow',   bot:'7vh',  yAnim:'',                                       delay:'0s'   },
+    { key:'duck',  flip:false, dir:'ltr', spd:'pr-medium', bot:'3vh',  yAnim:'pet-bounce 1.1s ease-in-out infinite',  delay:'-6s'  },
+    { key:'bot',   flip:true,  dir:'rtl', spd:'pr-medium', bot:'5vh',  yAnim:'',                                       delay:'-3s'  },
+    { key:'frog',  flip:false, dir:'ltr', spd:'pr-slow',   bot:'2vh',  yAnim:'pet-jump 2.3s ease-in-out infinite',   delay:'-14s' },
+    { key:'ghost', flip:false, dir:'ltr', spd:'pr-vslow',  bot:'40vh', yAnim:'pet-float 3.2s ease-in-out infinite',  delay:'-2s'  },
+    { key:'bunny', flip:true,  dir:'rtl', spd:'pr-fast',   bot:'13vh', yAnim:'pet-bounce 0.9s ease-in-out infinite', delay:'-9s'  },
+  ]
+
+  ROAMERS.forEach(r => {
     const wrap = document.createElement('div')
-    wrap.className = `pixel-pet pixel-pet--${pet.name}`
-    wrap.style.cssText = `bottom:${pet.bottom};animation-duration:${pet.speed}s;`
-    if (pet.facing === -1) wrap.style.animationName = 'pet-walk-rtl'
-
-    const canvas = document.createElement('canvas')
-    canvas.width = cols * S
-    canvas.height = rows * S
-    canvas.style.imageRendering = 'pixelated'
-    if (pet.facing === -1) canvas.style.transform = 'scaleX(-1)'
-    wrap.appendChild(canvas)
-    container.appendChild(wrap)
-
-    let frame = 0
-    drawPet(canvas, pet.frames, pet.palette, frame)
-    setInterval(() => {
-      frame = (frame + 1) % pet.frames.length
-      drawPet(canvas, pet.frames, pet.palette, frame)
-    }, 350)
+    wrap.className = `pet-roamer pr-${r.dir} ${r.spd}`
+    wrap.style.cssText = `bottom:${r.bot};animation-delay:${r.delay};`
+    wrap.appendChild(_makePetCanvas(r.key, r.flip, r.yAnim))
+    world.appendChild(wrap)
   })
+
+  _placePerchers()
 }
 
 // Final bootstrap

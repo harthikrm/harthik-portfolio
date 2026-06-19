@@ -820,39 +820,57 @@ main, footer {
   margin-left: 0.5rem;
 }
 
-/* ── Pixel Pets ─────────────────────────────────────────────────── */
-.pixel-pets-container {
-  position: absolute;
+/* ── Pixel Pets — site-wide playground ──────────────────────────── */
+
+/* Fixed overlay: roamers live here and stay on screen while scrolling */
+.pet-world {
+  position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 2;
+  z-index: 15;        /* above content, well below nav (1000) */
   overflow: hidden;
 }
 
-.pixel-pet {
+/* Each roamer: x-movement on wrapper, y-movement on the canvas inside */
+.pet-roamer {
   position: absolute;
-  animation: pet-walk-ltr 20s linear infinite;
+  left: 0;
   will-change: transform;
 }
 
-.pixel-pet canvas {
+/* Horizontal traversal directions */
+.pr-ltr { animation: pr-walk-ltr linear infinite; }
+.pr-rtl { animation: pr-walk-rtl linear infinite; }
+
+/* Speeds */
+.pr-vslow  { animation-duration: 40s; }
+.pr-slow   { animation-duration: 27s; }
+.pr-medium { animation-duration: 18s; }
+.pr-fast   { animation-duration: 12s; }
+
+@keyframes pr-walk-ltr { from { transform: translateX(-70px) } to { transform: translateX(110vw) } }
+@keyframes pr-walk-rtl { from { transform: translateX(110vw) } to { transform: translateX(-70px) } }
+
+/* Y-axis character animations (applied directly to canvas via JS) */
+@keyframes pet-float    { 0%,100% { transform: translateY(0)     } 50% { transform: translateY(-22px) } }
+@keyframes pet-jump     { 0%,65%,100% { transform: translateY(0) } 32% { transform: translateY(-38px) } }
+@keyframes pet-bounce   { 0%,100% { transform: translateY(0)     } 50% { transform: translateY(-10px) } }
+@keyframes pet-idle-bob { 0%,100% { transform: translateY(0)     } 50% { transform: translateY(-5px)  } }
+
+/* Glow for roamers */
+.pet-roamer canvas {
   display: block;
-  filter: drop-shadow(0 0 6px rgba(var(--accent-rgb), 0.45));
+  filter: drop-shadow(0 0 5px rgba(var(--accent-rgb), 0.38));
 }
 
-@keyframes pet-walk-ltr {
-  0%   { transform: translateX(-80px); }
-  100% { transform: translateX(105vw); }
+/* Perchers: sit on specific DOM elements */
+.pet-percher {
+  pointer-events: none;
 }
 
-@keyframes pet-walk-rtl {
-  0%   { transform: translateX(105vw); }
-  100% { transform: translateX(-80px); }
+.pet-percher canvas {
+  filter: drop-shadow(0 2px 8px rgba(var(--accent-rgb), 0.55));
 }
-
-.pixel-pet--cat   { animation-delay: 0s; }
-.pixel-pet--bot   { animation-delay: -8s; }
-.pixel-pet--duck  { animation-delay: -14s; }
 
 @media (max-width: 480px) {
   .bio-details {
@@ -864,7 +882,9 @@ main, footer {
   .case-item::before {
     display: none;
   }
-  .pixel-pets-container {
+  /* Hide pets on mobile — recruiters shouldn't fight tiny screens */
+  .pet-world,
+  .pet-percher {
     display: none;
   }
 }
