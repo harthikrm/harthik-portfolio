@@ -394,12 +394,15 @@ const _initSectionPets = () => {
     { key:'bot', flip:true,  dir:'rtl', spd:'pr-medium', side:'bottom', val:'8%',  yAnim:'', delay:'-5s' },
   ], true) // hero has overflow:hidden — punch through so pets aren't clipped
 
-  // Cases: the section is very tall (all projects stacked).
-  // Use TOP positioning so pets appear at fixed % from the TOP of the section —
-  // duck appears near the first projects, frog midway through.
+  // Cases: one pet roughly every ~1 screenful throughout the long project list.
+  // All use TOP so position is anchored to section start, not the distant floor.
   addPets('.cases', [
-    { key:'duck', flip:false, dir:'ltr', spd:'pr-medium', side:'top', val:'8%',  yAnim:'pet-bounce 1.1s ease-in-out infinite', delay:'-3s'  },
-    { key:'frog', flip:false, dir:'ltr', spd:'pr-slow',   side:'top', val:'50%', yAnim:'pet-jump 2.3s ease-in-out infinite',   delay:'-13s' },
+    { key:'duck',  flip:false, dir:'ltr', spd:'pr-medium', side:'top', val:'6%',  yAnim:'pet-bounce 1.1s ease-in-out infinite', delay:'-3s'  },
+    { key:'bot',   flip:true,  dir:'rtl', spd:'pr-medium', side:'top', val:'20%', yAnim:'',                                     delay:'-7s'  },
+    { key:'cat',   flip:false, dir:'ltr', spd:'pr-slow',   side:'top', val:'35%', yAnim:'',                                     delay:'-1s'  },
+    { key:'frog',  flip:false, dir:'ltr', spd:'pr-slow',   side:'top', val:'50%', yAnim:'pet-jump 2.3s ease-in-out infinite',   delay:'-13s' },
+    { key:'bunny', flip:true,  dir:'rtl', spd:'pr-fast',   side:'top', val:'65%', yAnim:'pet-bounce 0.9s ease-in-out infinite', delay:'-5s'  },
+    { key:'duck',  flip:false, dir:'ltr', spd:'pr-slow',   side:'top', val:'80%', yAnim:'pet-bounce 1.4s ease-in-out infinite', delay:'-11s' },
   ])
 
   // About: ghost drifts through mid-section, bunny scurries along the floor
