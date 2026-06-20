@@ -394,15 +394,20 @@ const _initSectionPets = () => {
     { key:'bot', flip:true,  dir:'rtl', spd:'pr-medium', side:'bottom', val:'8%',  yAnim:'', delay:'-5s' },
   ], true) // hero has overflow:hidden — punch through so pets aren't clipped
 
-  // Cases: one pet roughly every ~1 screenful throughout the long project list.
-  // All use TOP so position is anchored to section start, not the distant floor.
+  // Cases: 12 pets spread every ~8% through the long project list.
   addPets('.cases', [
-    { key:'duck',  flip:false, dir:'ltr', spd:'pr-medium', side:'top', val:'6%',  yAnim:'pet-bounce 1.1s ease-in-out infinite', delay:'-3s'  },
-    { key:'bot',   flip:true,  dir:'rtl', spd:'pr-medium', side:'top', val:'20%', yAnim:'',                                     delay:'-7s'  },
-    { key:'cat',   flip:false, dir:'ltr', spd:'pr-slow',   side:'top', val:'35%', yAnim:'',                                     delay:'-1s'  },
-    { key:'frog',  flip:false, dir:'ltr', spd:'pr-slow',   side:'top', val:'50%', yAnim:'pet-jump 2.3s ease-in-out infinite',   delay:'-13s' },
-    { key:'bunny', flip:true,  dir:'rtl', spd:'pr-fast',   side:'top', val:'65%', yAnim:'pet-bounce 0.9s ease-in-out infinite', delay:'-5s'  },
-    { key:'duck',  flip:false, dir:'ltr', spd:'pr-slow',   side:'top', val:'80%', yAnim:'pet-bounce 1.4s ease-in-out infinite', delay:'-11s' },
+    { key:'duck',  flip:false, dir:'ltr', spd:'pr-medium', side:'top', val:'5%',  yAnim:'pet-bounce 1.1s ease-in-out infinite', delay:'-3s'  },
+    { key:'bot',   flip:true,  dir:'rtl', spd:'pr-medium', side:'top', val:'13%', yAnim:'',                                     delay:'-7s'  },
+    { key:'cat',   flip:false, dir:'ltr', spd:'pr-slow',   side:'top', val:'21%', yAnim:'',                                     delay:'-1s'  },
+    { key:'frog',  flip:true,  dir:'rtl', spd:'pr-slow',   side:'top', val:'29%', yAnim:'pet-jump 2.3s ease-in-out infinite',   delay:'-9s'  },
+    { key:'bunny', flip:false, dir:'ltr', spd:'pr-fast',   side:'top', val:'37%', yAnim:'pet-bounce 0.9s ease-in-out infinite', delay:'-5s'  },
+    { key:'ghost', flip:false, dir:'ltr', spd:'pr-vslow',  side:'top', val:'45%', yAnim:'pet-float 3.2s ease-in-out infinite',  delay:'-2s'  },
+    { key:'duck',  flip:true,  dir:'rtl', spd:'pr-medium', side:'top', val:'53%', yAnim:'pet-bounce 1.3s ease-in-out infinite', delay:'-11s' },
+    { key:'cat',   flip:true,  dir:'rtl', spd:'pr-slow',   side:'top', val:'61%', yAnim:'',                                     delay:'-6s'  },
+    { key:'bot',   flip:false, dir:'ltr', spd:'pr-medium', side:'top', val:'69%', yAnim:'',                                     delay:'-14s' },
+    { key:'frog',  flip:false, dir:'ltr', spd:'pr-slow',   side:'top', val:'77%', yAnim:'pet-jump 2s ease-in-out infinite',     delay:'-4s'  },
+    { key:'bunny', flip:true,  dir:'rtl', spd:'pr-fast',   side:'top', val:'85%', yAnim:'pet-bounce 1s ease-in-out infinite',   delay:'-8s'  },
+    { key:'ghost', flip:true,  dir:'rtl', spd:'pr-vslow',  side:'top', val:'93%', yAnim:'pet-float 2.8s ease-in-out infinite',  delay:'-16s' },
   ])
 
   // About: ghost drifts through mid-section, bunny scurries along the floor
