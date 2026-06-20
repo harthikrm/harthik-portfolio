@@ -370,42 +370,47 @@ const _initSectionPets = () => {
   // Remove any existing section pets before re-adding
   document.querySelectorAll('[data-sp]').forEach(p => p.remove())
 
-  const addPets = (sel, pets) => {
+  // side: 'top'|'bottom', val: CSS value for that side
+  const addPets = (sel, pets, noOverflowClip = false) => {
     const section = document.querySelector(sel)
     if (!section) return
-    // Needs position context so absolute children are relative to this section
     if (!section.style.position) section.style.position = 'relative'
+    // Sections with overflow:hidden clip pets — punch through only when safe
+    if (noOverflowClip) section.style.overflow = 'visible'
     pets.forEach(r => {
       const wrap = document.createElement('div')
       wrap.className = `pet-roamer pr-${r.dir} ${r.spd}`
       wrap.setAttribute('data-sp', '')
-      wrap.style.cssText = `bottom:${r.bot};animation-delay:${r.delay};`
+      const side = r.side || 'bottom'
+      wrap.style.cssText = `${side}:${r.val};animation-delay:${r.delay};`
       wrap.appendChild(_makePetCanvas(r.key, r.flip, r.yAnim))
       section.appendChild(wrap)
     })
   }
 
-  // Hero: cat and bot walk near the bottom of the big landing section
+  // Hero: cat and bot walk near the bottom (100vh section, no clipping issue at these positions)
   addPets('.hero', [
-    { key:'cat',  flip:false, dir:'ltr', spd:'pr-slow',   bot:'14%', yAnim:'',                                      delay:'0s'   },
-    { key:'bot',  flip:true,  dir:'rtl', spd:'pr-medium', bot:'9%',  yAnim:'',                                      delay:'-5s'  },
-  ])
+    { key:'cat', flip:false, dir:'ltr', spd:'pr-slow',   side:'bottom', val:'14%', yAnim:'', delay:'0s'  },
+    { key:'bot', flip:true,  dir:'rtl', spd:'pr-medium', side:'bottom', val:'8%',  yAnim:'', delay:'-5s' },
+  ], true) // hero has overflow:hidden — punch through so pets aren't clipped
 
-  // Cases: duck bounces and frog leaps across the project list
+  // Cases: the section is very tall (all projects stacked).
+  // Use TOP positioning so pets appear at fixed % from the TOP of the section —
+  // duck appears near the first projects, frog midway through.
   addPets('.cases', [
-    { key:'duck', flip:false, dir:'ltr', spd:'pr-medium', bot:'2%',  yAnim:'pet-bounce 1.1s ease-in-out infinite', delay:'-3s'  },
-    { key:'frog', flip:false, dir:'ltr', spd:'pr-slow',   bot:'1%',  yAnim:'pet-jump 2.3s ease-in-out infinite',   delay:'-13s' },
+    { key:'duck', flip:false, dir:'ltr', spd:'pr-medium', side:'top', val:'8%',  yAnim:'pet-bounce 1.1s ease-in-out infinite', delay:'-3s'  },
+    { key:'frog', flip:false, dir:'ltr', spd:'pr-slow',   side:'top', val:'50%', yAnim:'pet-jump 2.3s ease-in-out infinite',   delay:'-13s' },
   ])
 
   // About: ghost drifts through mid-section, bunny scurries along the floor
   addPets('.about', [
-    { key:'ghost', flip:false, dir:'ltr', spd:'pr-vslow', bot:'48%', yAnim:'pet-float 3.2s ease-in-out infinite',  delay:'-2s'  },
-    { key:'bunny', flip:true,  dir:'rtl', spd:'pr-fast',  bot:'4%',  yAnim:'pet-bounce 0.9s ease-in-out infinite', delay:'-7s'  },
+    { key:'ghost', flip:false, dir:'ltr', spd:'pr-vslow', side:'top',    val:'38%', yAnim:'pet-float 3.2s ease-in-out infinite',  delay:'-2s' },
+    { key:'bunny', flip:true,  dir:'rtl', spd:'pr-fast',  side:'bottom', val:'6%',  yAnim:'pet-bounce 0.9s ease-in-out infinite', delay:'-7s' },
   ])
 
-  // Resumes: one more duck trots across the resume picker
+  // Resumes: duck trots across the resume picker
   addPets('.resumes', [
-    { key:'duck', flip:true, dir:'rtl', spd:'pr-medium', bot:'6%', yAnim:'pet-bounce 1.3s ease-in-out infinite', delay:'-9s' },
+    { key:'duck', flip:true, dir:'rtl', spd:'pr-medium', side:'bottom', val:'8%', yAnim:'pet-bounce 1.3s ease-in-out infinite', delay:'-9s' },
   ])
 }
 
@@ -413,12 +418,14 @@ const _initSectionPets = () => {
 const _placePerchers = () => {
   document.querySelectorAll('.pet-percher').forEach(p => p.remove())
 
-  // Cat sits on the big hero heading
+  // Cat perches on top of the hero h1.
+  // hero has overflow:visible now (set by addPets) so the cat won't be clipped.
   const h1 = document.querySelector('.hero h1')
   if (h1) {
     const p = document.createElement('div')
     p.className = 'pet-percher'
-    p.style.cssText = 'position:absolute;bottom:90%;left:1%;z-index:5;pointer-events:none;'
+    // bottom:100% sits the pet right above the h1's top edge
+    p.style.cssText = 'position:absolute;bottom:100%;left:3%;z-index:15;pointer-events:none;'
     p.appendChild(_makePetCanvas('cat', false, 'pet-idle-bob 2.1s ease-in-out infinite'))
     h1.style.position = 'relative'
     h1.appendChild(p)
