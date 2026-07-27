@@ -820,6 +820,268 @@ main, footer {
   margin-left: 0.5rem;
 }
 
+/* ── Experience Timeline ────────────────────────────────────────── */
+.experience {
+  padding: 10rem 0;
+  border-top: 1px solid var(--border-color);
+  position: relative;
+}
+
+.xp-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  max-width: 980px;
+}
+
+.xp-company {
+  position: relative;
+  padding-left: 2.5rem;
+}
+
+.xp-company::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.4rem;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--accent), transparent);
+  border-radius: 1px;
+  opacity: 0.5;
+}
+
+.xp-company::after {
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: 0.4rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.6);
+}
+
+.xp-company-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.xp-company-name {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.xp-location {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.xp-period {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.xp-role {
+  margin-bottom: 2.5rem;
+}
+
+.xp-role:last-child {
+  margin-bottom: 0;
+}
+
+.xp-role-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.xp-role-title {
+  font-family: var(--font-main);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.xp-role-period {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.xp-highlights {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.xp-highlights li {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  padding-left: 1.4rem;
+  position: relative;
+}
+
+.xp-highlights li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  opacity: 0.7;
+}
+
+/* ── Credentials (Education + Skills) ───────────────────────────── */
+.credentials {
+  padding: 10rem 0;
+  border-top: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.015);
+  position: relative;
+}
+
+.cred-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: start;
+}
+
+.edu-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 2rem 2.25rem;
+  margin-bottom: 1.5rem;
+  transition: var(--transition-smooth);
+}
+
+.edu-card:hover {
+  border-color: rgba(var(--accent-rgb), 0.4);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.edu-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.5rem;
+  margin-bottom: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.edu-school {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.edu-date {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.edu-degree {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+}
+
+.edu-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.edu-distinction {
+  color: var(--accent);
+}
+
+.edu-gpa {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.edu-location {
+  color: var(--text-muted);
+}
+
+.skill-group {
+  margin-bottom: 2.25rem;
+}
+
+.skill-group:last-child {
+  margin-bottom: 0;
+}
+
+.skill-group .tech-pills {
+  margin-top: 0.75rem;
+}
+
+.skill-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.15em;
+  font-weight: 700;
+}
+
+@media (max-width: 1024px) {
+  .experience,
+  .credentials {
+    padding: 6rem 0;
+  }
+
+  .cred-grid {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+
+  .xp-timeline {
+    gap: 3.5rem;
+  }
+
+  .xp-company {
+    padding-left: 1.75rem;
+  }
+
+  .xp-company-name {
+    font-size: 1.5rem;
+  }
+
+  .edu-card {
+    padding: 1.5rem;
+  }
+}
+
 /* ── Pixel Pets — page-relative playground ───────────────────────── */
 
 /* Each roamer is a direct child of its section, so it scrolls with the page */

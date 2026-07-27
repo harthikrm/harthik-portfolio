@@ -2,7 +2,7 @@ export const portfolioData = {
   profile: {
     name: "HARTHIK MALLICHETTY",
     title: "AI ENGINEER",
-    email: "harthikmallichetty@gmail.com",
+    email: "hrmallichetty@gmail.com",
     github: "github.com/harthikrm",
     linkedin: "linkedin.com/in/harthikrm",
     location: "Dallas, TX",
@@ -217,9 +217,68 @@ export const portfolioData = {
   experience: [
     {
       company: "Prolifics",
-      role: "Graduate Intern - Data Engineering",
-      period: "May 2024 - Aug 2024",
-      highlights: ["Built dbt-driven analytical dashboards", "Automated SQL transformation pipelines", "Improved data quality by 30%"]
+      location: "Hyderabad, India",
+      period: "Feb 2023 — Jul 2024",
+      roles: [
+        {
+          title: "Associate Data Engineer",
+          period: "Jun 2023 — Jul 2024",
+          highlights: [
+            "Deployed a TensorFlow sprint-risk prediction model as a Flask REST API, giving engineering managers early warning of delivery slips before sprint completion.",
+            "Unified QA and project-system data through scalable SQL ETL pipelines, powering both delivery analytics and the risk model's training data.",
+            "Drove adoption across 200+ developers by integrating predictions into engineering dashboards, backed by documentation and onboarding that made the metrics self-serve."
+          ]
+        },
+        {
+          title: "Data Engineer Intern",
+          period: "Feb 2023 — May 2023",
+          highlights: [
+            "Consolidated 100K+ PostgreSQL records into reusable analytics datasets through SQL ETL pipelines, laying the data groundwork later used for sprint analytics.",
+            "Defined KPIs for sprint health, defect trends, and delivery performance that became the shared reporting language across QA and delivery teams."
+          ]
+        }
+      ]
+    },
+    {
+      company: "HeiDigi",
+      location: "Hyderabad, India",
+      period: "Mar 2022 — Aug 2022",
+      roles: [
+        {
+          title: "Data Analyst Intern",
+          period: "Mar 2022 — Aug 2022",
+          highlights: [
+            "Built campaign measurement across 20+ marketing campaigns, defining KPIs and automating recurring client reporting through reusable Python and SQL data pipelines.",
+            "Ran experimentation workflows and statistical analyses that drove 20% higher ROI and 18% higher CTR across client accounts."
+          ]
+        }
+      ]
     }
+  ],
+
+  education: [
+    {
+      school: "University of Texas at Dallas",
+      location: "Richardson, TX",
+      degree: "MS, Business Analytics & Artificial Intelligence",
+      distinction: "Scholar With Distinction",
+      gpa: "3.8 / 4.0",
+      date: "May 2026"
+    },
+    {
+      school: "GITAM University",
+      location: "Hyderabad, India",
+      degree: "BTech, Computer Science & Business Systems",
+      distinction: "",
+      gpa: "3.7 / 4.0",
+      date: "Apr 2024"
+    }
+  ],
+
+  skills: [
+    { label: "Languages & Databases", items: ["Python", "SQL", "R", "JavaScript", "TypeScript", "PostgreSQL", "MySQL", "pgvector", "DuckDB"] },
+    { label: "Data Engineering & Analytics", items: ["ETL", "Data Modeling", "Airflow", "dbt", "Pandas", "Power BI", "Tableau", "A/B Testing"] },
+    { label: "Cloud & Backend", items: ["GCP", "Cloud Run", "Vertex AI", "Cloud SQL", "Docker", "FastAPI", "Flask", "Git", "GitHub Actions"] },
+    { label: "Machine Learning & AI", items: ["TensorFlow", "PyTorch", "Scikit-learn", "Hugging Face", "LangChain", "LangGraph", "OpenAI"] }
   ]
 };

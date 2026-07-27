@@ -34,6 +34,7 @@ const renderApp = (isInitial = false) => {
           <div class="logo">HARTHIK.SYS</div>
           <nav class="nav-links">
             <a href="#projects">Work</a>
+            <a href="#experience">Experience</a>
             <a href="#about">Bio</a>
             <a href="#contact">Contact</a>
           </nav>
@@ -137,6 +138,74 @@ const renderContent = () => {
           </div>
         </div>
       </section>
+
+      <section id="experience" class="experience">
+        <div class="container">
+          <span class="case-tag">Track Record // Deployment History</span>
+          <h2 class="section-title">Work Experience</h2>
+          <div class="xp-timeline">
+            ${portfolioData.experience.map(company => `
+              <div class="xp-company">
+                <div class="xp-company-head">
+                  <div>
+                    <h3 class="xp-company-name">${company.company}</h3>
+                    <span class="xp-location">${company.location}</span>
+                  </div>
+                  <span class="xp-period">${company.period}</span>
+                </div>
+                ${company.roles.map(role => `
+                  <div class="xp-role">
+                    <div class="xp-role-head">
+                      <span class="xp-role-title">${role.title}</span>
+                      <span class="xp-role-period">${role.period}</span>
+                    </div>
+                    <ul class="xp-highlights">
+                      ${role.highlights.map(h => `<li>${h}</li>`).join('')}
+                    </ul>
+                  </div>
+                `).join('')}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </section>
+
+      <section id="credentials" class="credentials">
+        <div class="container">
+          <div class="cred-grid">
+            <div class="cred-col">
+              <span class="case-tag">Credentials // Formal Training</span>
+              <h2 class="section-title">Education</h2>
+              ${portfolioData.education.map(ed => `
+                <div class="edu-card">
+                  <div class="edu-head">
+                    <h3 class="edu-school">${ed.school}</h3>
+                    <span class="edu-date">${ed.date}</span>
+                  </div>
+                  <p class="edu-degree">${ed.degree}</p>
+                  <div class="edu-meta">
+                    ${ed.distinction ? `<span class="edu-distinction">★ ${ed.distinction}</span>` : ''}
+                    <span class="edu-gpa">GPA ${ed.gpa}</span>
+                    <span class="edu-location">${ed.location}</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+            <div class="cred-col">
+              <span class="case-tag">Arsenal // Tooling</span>
+              <h2 class="section-title">Skills</h2>
+              ${portfolioData.skills.map(group => `
+                <div class="skill-group">
+                  <span class="skill-label">${group.label}</span>
+                  <div class="tech-pills">
+                    ${group.items.map(s => `<span class="tech-pill">${s}</span>`).join('')}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   `
 }
@@ -231,6 +300,21 @@ const initializeAnimations = () => {
       opacity: 0,
       y: 40,
       duration: 1,
+      ease: "power3.out"
+    })
+  })
+
+  // Experience / Education / Skills reveal
+  document.querySelectorAll('.xp-company, .edu-card, .skill-group').forEach(el => {
+    gsap.from(el, {
+      scrollTrigger: {
+        trigger: el,
+        start: "top 85%",
+        toggleActions: "play none none reverse"
+      },
+      opacity: 0,
+      y: 30,
+      duration: 0.9,
       ease: "power3.out"
     })
   })
@@ -414,6 +498,16 @@ const _initSectionPets = () => {
   addPets('.about', [
     { key:'ghost', flip:false, dir:'ltr', spd:'pr-vslow', side:'top',    val:'38%', yAnim:'pet-float 3.2s ease-in-out infinite',  delay:'-2s' },
     { key:'bunny', flip:true,  dir:'rtl', spd:'pr-fast',  side:'bottom', val:'6%',  yAnim:'pet-bounce 0.9s ease-in-out infinite', delay:'-7s' },
+  ])
+
+  // Experience: frog hops along the timeline
+  addPets('.experience', [
+    { key:'frog', flip:false, dir:'ltr', spd:'pr-slow', side:'bottom', val:'4%', yAnim:'pet-jump 2.2s ease-in-out infinite', delay:'-3s' },
+  ])
+
+  // Credentials: ghost drifts between education and skills
+  addPets('.credentials', [
+    { key:'ghost', flip:true, dir:'rtl', spd:'pr-vslow', side:'top', val:'30%', yAnim:'pet-float 3s ease-in-out infinite', delay:'-11s' },
   ])
 
   // Resumes: duck trots across the resume picker
