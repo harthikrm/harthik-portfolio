@@ -1,12 +1,12 @@
 export const portfolioData = {
   profile: {
     name: "HARTHIK MALLICHETTY",
-    title: "AI ENGINEER",
+    title: "DATA ENGINEER & AI/ML ENGINEER",
     email: "hrmallichetty@gmail.com",
     github: "github.com/harthikrm",
     linkedin: "linkedin.com/in/harthikrm",
     location: "Dallas, TX",
-    summary: "I build AI systems that replace manual, high-stakes work — from fine-tuning open-source LLMs to production RAG pipelines to financial risk infrastructure. Every system I ship runs in production, not just notebooks.<br><br>MS Business Analytics & AI, UT Dallas (May 2026). Available for full-time roles now."
+    summary: "I build the data foundations and the AI systems on top of them — from SQL ETL pipelines and Airflow/dbt data platforms to fine-tuned open-source LLMs and production RAG pipelines. Every system I ship runs in production, not just notebooks.<br><br>MS Business Analytics & AI, UT Dallas (May 2026). Available for full-time roles now."
   },
 
   roles: [
@@ -30,14 +30,14 @@ export const portfolioData = {
         "RAG PIPELINE": "10-Step",
         "METRICS/COMPANY": "65"
       },
-      tech: ["Python", "FastAPI", "PostgreSQL", "pgvector", "dbt", "Airflow", "Voyage AI", "GPT-4o-mini", "GCP", "React", "LangSmith"],
+      tech: ["Python", "FastAPI", "PostgreSQL", "pgvector", "dbt", "Airflow", "LangGraph", "Voyage AI", "GPT-4o-mini", "GCP", "React", "LangSmith"],
       link: "https://signal.harthik.dev",
       github: "https://github.com/harthikrm/signal-financial-intelligence"
     },
     {
       id: "code-sentinel",
       title: "Code Sentinel",
-      description: "Fine-tuned Mistral-7B on 143K real reviewer comments to automate code review on every pull request. Outperforms GPT-4o-mini. Deployed on Google Vertex AI with a GitHub Action that posts AI-generated reviews automatically.",
+      description: "Fine-tuned Mistral-7B on 143K real reviewer comments using QLoRA on an NVIDIA H100 — training under 1% of parameters — to automate first-pass code review. Outperforms GPT-4o-mini. Deployed on Google Vertex AI with a GitHub Action that posts AI-generated reviews on every pull request.",
       image: "code-sentinel.png",
       tags: ["ML", "AI"],
       featured: true,
@@ -224,17 +224,18 @@ export const portfolioData = {
           title: "Associate Data Engineer",
           period: "Jun 2023 — Jul 2024",
           highlights: [
-            "Deployed a TensorFlow sprint-risk prediction model as a Flask REST API, giving engineering managers early warning of delivery slips before sprint completion.",
-            "Unified QA and project-system data through scalable SQL ETL pipelines, powering both delivery analytics and the risk model's training data.",
-            "Drove adoption across 200+ developers by integrating predictions into engineering dashboards, backed by documentation and onboarding that made the metrics self-serve."
+            "Designed and deployed a TensorFlow-based sprint risk prediction service as a Flask REST API, giving 15+ engineering managers 1–2 weeks' advance visibility into at-risk sprints.",
+            "Unified 250K+ JIRA and QA execution records through scalable SQL ETL pipelines, creating the trusted dataset that powered both predictive modeling and engineering analytics.",
+            "Drove adoption across 200+ developers by integrating predictions into engineering dashboards, backed by documentation and onboarding across delivery teams."
           ]
         },
         {
           title: "Data Engineer Intern",
           period: "Feb 2023 — May 2023",
           highlights: [
-            "Consolidated 100K+ PostgreSQL records into reusable analytics datasets through SQL ETL pipelines, laying the data groundwork later used for sprint analytics.",
-            "Defined KPIs for sprint health, defect trends, and delivery performance that became the shared reporting language across QA and delivery teams."
+            "Engineered SQL ETL pipelines that consolidated 100K+ JIRA and PostgreSQL engineering records into reusable analytics datasets, establishing the data foundation for delivery analytics.",
+            "Standardized engineering KPIs for sprint health, defect trends, and delivery performance, creating a shared reporting framework across QA and delivery teams.",
+            "Validated engineering datasets by identifying data quality issues across QA and project systems, improving the reliability of downstream analytics and reporting."
           ]
         }
       ]
@@ -249,7 +250,7 @@ export const portfolioData = {
           period: "Mar 2022 — Aug 2022",
           highlights: [
             "Built campaign measurement across 20+ marketing campaigns, defining KPIs and automating recurring client reporting through reusable Python and SQL data pipelines.",
-            "Ran experimentation workflows and statistical analyses that drove 20% higher ROI and 18% higher CTR across client accounts."
+            "Ran experimentation workflows and statistical analyses that identified high-performing audiences and creatives, driving 20% higher ROI and 18% higher CTR."
           ]
         }
       ]

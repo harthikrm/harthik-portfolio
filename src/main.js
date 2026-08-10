@@ -94,9 +94,9 @@ const renderContent = () => {
         <div class="container hero-content">
           <span class="hero-label">SYSTEM STATUS: OPERATIONAL // V.2.0.26</span>
           <h1>
-            <span>AI <br>ENGINEER</span>
+            <span>DATA ENGINEER <br>&amp; AI/ML ENGINEER</span>
           </h1>
-          <p class="hero-tagline">Production AI. Not Portfolio AI.</p>
+          <p class="hero-tagline">Production systems. Not portfolio demos.</p>
           <div class="role-switcher">
             <button class="role-btn ${currentRole === 'ALL' ? 'active' : ''}" data-role="ALL">All Categories</button>
             ${portfolioData.roles.map(r => `

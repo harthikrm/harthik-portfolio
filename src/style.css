@@ -153,7 +153,7 @@ header {
 
 .hero h1 {
   font-family: var(--font-display);
-  font-size: clamp(4rem, 12vw, 9rem);
+  font-size: clamp(3rem, 7.5vw, 6.5rem);
   line-height: 0.85;
   font-weight: 800;
   letter-spacing: -0.05em;
@@ -543,7 +543,7 @@ main, footer {
   }
 
   .hero h1 {
-    font-size: clamp(3rem, 15vw, 4.5rem);
+    font-size: clamp(2rem, 10.5vw, 3.5rem);
     letter-spacing: -0.04em;
     margin-bottom: 2.5rem;
   }
