@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Resume PDFs offline until updated
+public/resumes/*.pdf
+public/resumes/~$*
+
+_offline_resumes/
+public/resumes/*.pdf
