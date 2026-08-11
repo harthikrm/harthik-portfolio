@@ -23,9 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-# Resume PDFs offline until updated
-public/resumes/*.pdf
-public/resumes/~$*
-
+# Local-only resume backup / Word lock files
 _offline_resumes/
-public/resumes/*.pdf
+public/resumes/~$*

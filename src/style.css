@@ -431,23 +431,6 @@ header {
   transform: translateY(0);
 }
 
-.resume-card--unavailable {
-  cursor: not-allowed;
-  opacity: 0.55;
-  pointer-events: auto;
-}
-
-.resume-card--unavailable:hover {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.12);
-}
-
-.resume-card--unavailable:hover .resume-card-inner svg,
-.resume-card--unavailable:hover .download-icon {
-  color: inherit;
-  opacity: 0.5 !important;
-}
-
 /* Footer / Direct Access */
 footer {
   padding: 10rem 0 5rem;

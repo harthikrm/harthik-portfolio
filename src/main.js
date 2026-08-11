@@ -51,7 +51,7 @@ const renderApp = (isInitial = false) => {
           <h2 class="section-title">Which role are you hiring for?</h2>
           <div class="resume-grid">
             ${portfolioData.resumes.map(r => `
-              <a href="#" class="resume-card magnetic-wrap resume-card--unavailable" aria-disabled="true" title="Resume temporarily unavailable" data-resume-role="${r.title}">
+              <a href="/resumes/${r.file}" download class="resume-card magnetic-wrap" data-resume-role="${r.title}">
                 <div class="resume-card-inner">
                   <i data-lucide="file-text"></i>
                   <span class="resume-role">${r.title}</span>
@@ -82,7 +82,6 @@ const renderApp = (isInitial = false) => {
 
   initializeInteractions()
   initializeIcons()
-  blockResumeDownloads()
   if (hasInitialized) initializeAnimations()
   if (hasInitialized) _initSectionPets()
   if (hasInitialized) _placePerchers()
@@ -378,19 +377,6 @@ const initializeIcons = () => {
   } catch (e) {
     console.warn('Lucide icons load bypass')
   }
-}
-
-/** Resume PDFs are offline until updated — block all download attempts. */
-const blockResumeDownloads = () => {
-  document.querySelectorAll('.resume-card--unavailable, a[href^="/resumes/"]').forEach((el) => {
-    el.setAttribute('href', '#')
-    el.removeAttribute('download')
-    el.setAttribute('aria-disabled', 'true')
-    el.addEventListener('click', (e) => {
-      e.preventDefault()
-      e.stopPropagation()
-    })
-  })
 }
 
 // ── Pixel Pets ────────────────────────────────────────────────────
