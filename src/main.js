@@ -6,6 +6,7 @@ import {
   site, toc, intro, work, archive, experience,
   education, programs, writing, competitions, about, featured,
 } from './data'
+import { FIGURES } from './figures'
 
 inject()
 gsap.registerPlugin(ScrollTrigger)
@@ -14,57 +15,6 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
 if (reducedMotion) document.documentElement.classList.add('reduced-motion')
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
-
-// ── Inline SVG figures (Room / Mylonite) ─────────────────────────
-const FIGURES = {
-  // Three model streams converging into one persistent memory line.
-  room: `
-  <svg viewBox="0 0 640 420" role="img" aria-label="Diagram: three model streams converging into one project memory line" xmlns="http://www.w3.org/2000/svg">
-    <rect width="640" height="420" fill="none"/>
-    <g stroke="#141414" fill="none" stroke-width="1.5">
-      <path d="M60 90 H300 Q340 90 360 140 L380 190"/>
-      <path d="M60 210 H340 L380 210"/>
-      <path d="M60 330 H300 Q340 330 360 280 L380 230"/>
-      <path d="M380 210 H580" stroke-width="3"/>
-    </g>
-    <g fill="#141414" font-family="IBM Plex Mono, monospace" font-size="13" letter-spacing="1">
-      <text x="60" y="76">GPT</text>
-      <text x="60" y="196">CLAUDE</text>
-      <text x="60" y="316">GEMINI</text>
-      <text x="420" y="196">PROJECT MEMORY</text>
-    </g>
-    <g fill="#2b45ff">
-      <circle cx="60" cy="90" r="4"/>
-      <circle cx="60" cy="210" r="4"/>
-      <circle cx="60" cy="330" r="4"/>
-      <circle cx="580" cy="210" r="5"/>
-    </g>
-    <g stroke="#141414" stroke-opacity="0.25" stroke-dasharray="2 5" fill="none">
-      <path d="M60 130 H280"/><path d="M60 250 H280"/><path d="M60 290 H280"/>
-    </g>
-  </svg>`,
-  // Two interleavings of the same program, diverging.
-  mylonite: `
-  <svg viewBox="0 0 640 420" role="img" aria-label="Diagram: two thread interleavings of the same program diverging" xmlns="http://www.w3.org/2000/svg">
-    <rect width="640" height="420" fill="none"/>
-    <g stroke="#141414" fill="none" stroke-width="1.5">
-      <path d="M60 140 H230 L290 200 H400 L460 140 H580"/>
-      <path d="M60 200 H230 L290 140 H400 L460 200 H510"/>
-      <path d="M60 280 H580" stroke-opacity="0.3"/>
-    </g>
-    <path d="M510 200 L580 260" stroke="#2b45ff" fill="none" stroke-width="2"/>
-    <g fill="#141414" font-family="IBM Plex Mono, monospace" font-size="13" letter-spacing="1">
-      <text x="60" y="126">T1</text>
-      <text x="60" y="186">T2</text>
-      <text x="60" y="266" fill-opacity="0.4">EXPECTED</text>
-      <text x="470" y="296" fill="#2b45ff">DIVERGENCE</text>
-    </g>
-    <circle cx="580" cy="260" r="5" fill="#2b45ff"/>
-    <g stroke="#141414" stroke-opacity="0.25" stroke-dasharray="2 5" fill="none">
-      <path d="M230 100 V320"/><path d="M400 100 V320"/>
-    </g>
-  </svg>`,
-}
 
 // ── Render ───────────────────────────────────────────────────────
 const renderHeader = () => `

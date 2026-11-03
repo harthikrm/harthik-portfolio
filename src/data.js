@@ -90,8 +90,8 @@ export const work = [
       { label: "SIGNAL.HARTHIK.DEV", url: "https://signal.harthik.dev" },
       { label: "GITHUB", url: "https://github.com/harthikrm/signal-financial-intelligence" },
     ],
-    figure: { type: "img", src: "signal_financial_intelligence_platform.png", alt: "Signal — query interface answering questions over SEC filings" },
-    caption: "FIG.02 — SIGNAL / QUERY INTERFACE",
+    figure: { type: "svg", svg: "signal" },
+    caption: "FIG.02 — DATA FOUNDATION & RETRIEVAL",
   },
   {
     no: "03",
@@ -113,8 +113,8 @@ export const work = [
     ],
     stack: "PyTorch · Mistral-7B · QLoRA · PEFT · FastAPI · Vertex AI · W&B · GitHub Actions",
     links: [{ label: "GITHUB", url: "https://github.com/harthikrm/code-sentinel" }],
-    figure: { type: "img", src: "code-sentinel.png", alt: "Code Sentinel — AI-generated review comments posted on a pull request" },
-    caption: "FIG.03 — AUTOMATED REVIEW ON A PULL REQUEST",
+    figure: { type: "svg", svg: "codeSentinel" },
+    caption: "FIG.03 — FINE-TUNE → REVIEW ON EVERY PR",
   },
   {
     no: "04",
@@ -272,7 +272,7 @@ export const featured = [
     status: "IN REVISION — AVAILABLE SOON",
     url: "",
     linkLabel: "",
-    preview: { kind: "cover", eyebrow: "CURRICULUM VITAE", lines: ["Harthik", "Mallichetty"], ruled: true },
+    preview: { kind: "svg", svg: "resume" },
   },
   {
     id: "feat-room",
@@ -302,7 +302,7 @@ export const featured = [
     status: "LIVE",
     url: "https://signal.harthik.dev",
     linkLabel: "SIGNAL.HARTHIK.DEV ↗",
-    preview: { kind: "img", src: "signal_financial_intelligence_platform.png", alt: "Signal — query interface over SEC filings" },
+    preview: { kind: "svg", svg: "signal" },
   },
   {
     id: "feat-research-aeil",
@@ -312,7 +312,7 @@ export const featured = [
     status: "WORKING PAPER",
     url: "",
     linkLabel: "",
-    preview: { kind: "cover", eyebrow: "RESEARCH — AEIL", lines: ["Agent evaluation", "integrity."], ruled: true },
+    preview: { kind: "svg", svg: "aeil" },
   },
   {
     id: "feat-article-arc",
@@ -332,7 +332,7 @@ export const featured = [
     status: "RESEARCH IN PROGRESS",
     url: "",
     linkLabel: "",
-    preview: { kind: "cover", eyebrow: "ARC PRIZE 2026", lines: ["Abstract", "reasoning."], ruled: true },
+    preview: { kind: "svg", svg: "arc" },
   },
   {
     id: "feat-research-gemma",
@@ -342,7 +342,7 @@ export const featured = [
     status: "IN PROGRESS",
     url: "",
     linkLabel: "",
-    preview: { kind: "cover", eyebrow: "KAGGLE", lines: ["Gemma 4", "developer agent."], ruled: true },
+    preview: { kind: "svg", svg: "gemma" },
   },
   {
     id: "feat-github",
@@ -352,7 +352,7 @@ export const featured = [
     status: "@HARTHIKRM",
     url: "https://github.com/harthikrm",
     linkLabel: "GITHUB.COM/HARTHIKRM ↗",
-    preview: { kind: "cover", eyebrow: "PROFILE", lines: ["github /", "harthikrm"], plain: true },
+    preview: { kind: "svg", svg: "github" },
   },
   {
     id: "feat-linkedin",
@@ -362,6 +362,6 @@ export const featured = [
     status: "PROFILE",
     url: "https://www.linkedin.com/in/harthikmallichetty",
     linkLabel: "LINKEDIN ↗",
-    preview: { kind: "cover", eyebrow: "PROFILE", lines: ["linkedin /", "harthikmallichetty"], plain: true },
+    preview: { kind: "svg", svg: "linkedin" },
   },
 ];
