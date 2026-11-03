@@ -193,10 +193,15 @@ header.scrolled {
   transform-origin: left;
 }
 
+.nav-resume {
+  white-space: nowrap;
+}
+
 .nav-talk {
   background: var(--ink);
   color: var(--paper) !important;
   padding: 6px 14px !important;
+  white-space: nowrap;
 }
 
 .nav-talk::after {
@@ -1186,7 +1191,7 @@ a.fc-card:hover .fc-action {
     gap: 14px;
   }
 
-  .nav-links a:not(.nav-talk):nth-child(n + 2) {
+  .nav-links a:not(.nav-talk):not(.nav-resume) {
     display: none;
   }
 

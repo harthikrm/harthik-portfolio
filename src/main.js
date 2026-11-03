@@ -30,6 +30,7 @@ const renderHeader = () => `
         <a href="#experience">Experience</a>
         <a href="#writing">Writing</a>
         <a href="#about">About</a>
+        <a href="/Harthik_Mallichetty_Resume.pdf" class="nav-resume" target="_blank" rel="noopener noreferrer">Resume ↗</a>
         <a href="mailto:${site.email}" class="nav-talk">Let's talk</a>
       </nav>
     </div>

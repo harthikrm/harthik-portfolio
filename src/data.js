@@ -269,9 +269,9 @@ export const featured = [
     type: "DOCUMENT",
     title: "Résumé",
     summary: "Single-page professional résumé covering Room, Prolifics, HeiDigi and selected systems work.",
-    status: "IN REVISION — AVAILABLE SOON",
-    url: "",
-    linkLabel: "",
+    status: "PDF — ONE PAGE",
+    url: "/Harthik_Mallichetty_Resume.pdf",
+    linkLabel: "OPEN PDF ↗",
     preview: { kind: "svg", svg: "resume" },
   },
   {
