@@ -1,285 +1,269 @@
-export const portfolioData = {
-  profile: {
-    name: "HARTHIK MALLICHETTY",
-    title: "DATA ENGINEER & AI/ML ENGINEER",
-    email: "hrmallichetty@gmail.com",
-    github: "github.com/harthikrm",
-    linkedin: "linkedin.com/in/harthikrm",
-    location: "Dallas, TX",
-    summary: "I build the data foundations and the AI systems on top of them — from SQL ETL pipelines and Airflow/dbt data platforms to fine-tuned open-source LLMs and production RAG pipelines. Every system I ship runs in production, not just notebooks.<br><br>MS Business Analytics & AI, UT Dallas (May 2026). Available for full-time roles now."
-  },
+// ─────────────────────────────────────────────────────────────────
+// harthik.dev — content model
+// Single source of truth for everything rendered on the page.
+// All claims trace to the resume (Nov 2026) or live, verified sources.
+// ─────────────────────────────────────────────────────────────────
 
-  roles: [
-    { id: "AN", label: "Analytics", color: "#3b82f6" },
-    { id: "ML", label: "Machine Learning", color: "#10b981" },
-    { id: "DE", label: "Data Engineering", color: "#8b5cf6" },
-    { id: "BI", label: "BI & Visualization", color: "#ec4899" },
-    { id: "HR", label: "HR & Operations", color: "#f59e0b" },
-    { id: "AI", label: "AI & Automation", color: "#ef4444" }
+export const site = {
+  name: "Harthik Mallichetty",
+  role: "AI Engineer & Data Engineer",
+  founderLine: "Founder, Room",
+  location: "Dallas, Texas",
+  email: "hrmallichetty@gmail.com",
+  url: "https://www.harthik.dev",
+  version: "PORTFOLIO_26 / V3.0",
+  status: "Open to AI, Data & ML engineering roles",
+  links: [
+    { label: "GitHub", url: "https://github.com/harthikrm" },
+    { label: "LinkedIn", url: "https://www.linkedin.com/in/harthikmallchetty/" },
+    { label: "Medium", url: "https://medium.com/@hrmallichetty" },
   ],
-
-  projects: [
-    {
-      id: "signal",
-      title: "Signal — Financial Intelligence Platform",
-      description: "Production RAG system where any investor asks a question in plain English and gets a verified, cited answer from SEC filings in seconds. No analyst required.",
-      image: "signal_financial_intelligence_platform.png",
-      tags: ["AI", "DE"],
-      metrics: {
-        "S&P 500 COVERAGE": "70 Companies",
-        "RAG PIPELINE": "10-Step",
-        "METRICS/COMPANY": "65"
-      },
-      tech: ["Python", "FastAPI", "PostgreSQL", "pgvector", "dbt", "Airflow", "LangGraph", "Voyage AI", "GPT-4o-mini", "GCP", "React", "LangSmith"],
-      link: "https://signal.harthik.dev",
-      github: "https://github.com/harthikrm/signal-financial-intelligence"
-    },
-    {
-      id: "code-sentinel",
-      title: "Code Sentinel",
-      description: "Fine-tuned Mistral-7B on 143K real reviewer comments using QLoRA on an NVIDIA H100 — training under 1% of parameters — to automate first-pass code review. Outperforms GPT-4o-mini. Deployed on Google Vertex AI with a GitHub Action that posts AI-generated reviews on every pull request.",
-      image: "code-sentinel.png",
-      tags: ["ML", "AI"],
-      featured: true,
-      metrics: {
-        "BERTScore F1": "0.7470",
-        "vs GPT-4o-mini": "+6.1%",
-        "TRAINING EXAMPLES": "143K"
-      },
-      tech: ["Python", "PyTorch", "Mistral-7B", "QLoRA", "PEFT", "FastAPI", "Vertex AI", "W&B", "GitHub Actions"],
-      link: "https://github.com/harthikrm/code-sentinel"
-    },
-    {
-      id: "job-search-auto",
-      title: "Job Search Automation Pipeline",
-      description: "Automated end-to-end job discovery pipeline using GPT-4o-mini for hyper-personalized resume tailoring.",
-      image: "job_search_automation_pipeline.png",
-      tags: ["AI", "DE"],
-      metrics: {
-        "JOBS": "1,400+",
-        "COST/RESUME": "$0.002",
-        "ATS SCORE": "90+"
-      },
-      tech: ["Python", "GPT-4o", "n8n", "Docker"],
-      link: "#"
-    },
-    {
-      id: "quant-risk",
-      title: "Quant Risk Desk",
-      description: "Automated financial risk desk providing real-time VaR, Sharpe, and Beta monitoring across cross-asset portfolios and market regimes.",
-      image: "quant_risk_desk.png",
-      tags: ["DE", "AN"],
-      metrics: {
-        "VaR CONFIDENCE": "99th %ile",
-        "VIOLATIONS": "ZERO",
-        "RECORDS": "21K/DAY"
-      },
-      tech: ["Python", "Pandas", "SQL", "Tableau"],
-      github: "https://github.com/harthikrm/quant-risk-desk"
-    },
-    {
-      id: "f1-intel",
-      title: "F1 Race Intelligence",
-      description: "Predictive race strategy engine using historical lap data to model pit-stop timing and degradation curves for Formula 1 teams.",
-      image: "f1_race_intelligence.png",
-      tags: ["DE", "AN"],
-      metrics: {
-        "DATASET": "200MB",
-        "FILES": "459",
-        "ACCURACY": "94%"
-      },
-      tech: ["Python", "PostgreSQL", "FastAPI", "React"],
-      github: "https://github.com/harthikrm/f1-race-intelligence"
-    },
-    {
-      id: "supply-chain",
-      title: "Global Supply Chain Intelligence",
-      description: "Global disruption detection system mapping trade-value-at-risk and path-length optimization across multi-tier logistics networks.",
-      image: "global_supply_chain_intelligence.png",
-      tags: ["ML", "AN"],
-      metrics: {
-        "RECORDS": "78K",
-        "RECALL": "70.9%",
-        "DISRUPTION DETECTION": "100%"
-      },
-      tech: ["Python", "NetworkX", "GraphDB"],
-      github: "https://github.com/harthikrm/global-supply-chain-intelligence"
-    },
-    {
-      id: "iot-analytics",
-      title: "Smart Home IoT Analytics",
-      description: "Real-time sensor telemetry platform processing 240Hz data streams for anomaly detection and energy optimization.",
-      image: "smart_home_iot_analytics.png",
-      tags: ["ML", "BI"],
-      metrics: {
-        "RECORDS": "830K",
-        "CHURN LIFT": "11.95X",
-        "ROC-AUC": "0.96"
-      },
-      tech: ["Python", "MQTT", "Grafana"],
-      github: "https://github.com/harthikrm/smart-home-analytics"
-    },
-    {
-      id: "nlp-fake-news",
-      title: "NLP Fake News Detection",
-      description: "Deep Learning pipeline using BERT Transformers to classify real-time political news streams with high semantic accuracy.",
-      image: "nlp_fake_news_detection.png",
-      tags: ["ML", "AI"],
-      metrics: {
-        "F1 SCORE": "0.93",
-        "EPOCHS": "15",
-        "PARAMS": "110M"
-      },
-      tech: ["TensorFlow", "Transformers", "Python"],
-      link: "#"
-    },
-    {
-      id: "merchant-risk",
-      title: "Merchant Credit Risk",
-      description: "Credit risk monitoring platform detecting high-risk merchant behavior and fraud patterns in real-time transaction streams.",
-      image: "merchant_credit_risk.png",
-      tags: ["ML", "AN"],
-      metrics: {
-        "TRANSACTIONS": "400K+",
-        "PR-AUC": "0.44",
-        "MERCHANTS": "1200"
-      },
-      tech: ["SQL", "Python", "Tableau"],
-      github: "https://github.com/harthikrm/merchant-credit-risk-fraud-monitoring"
-    },
-    {
-      id: "recruiting-analytics",
-      title: "Recruiting & People Systems Analytics",
-      description: "People analytics dashboard for optimizing the recruiting funnel, offer acceptance rates, and candidate experience metrics.",
-      image: "recruiting_people_systems_analytics.png",
-      tags: ["HR", "BI"],
-      metrics: {
-        "MID-FUNNEL DROP-OFF": "79.3%",
-        "TIME-TO-HIRE": "49.5d",
-        "OFFER ACCEPTANCE": "75%"
-      },
-      tech: ["Power BI", "SQL", "Python"],
-      github: "https://github.com/harthikrm/recruiting-funnel-analytics"
-    },
-    {
-      id: "ats-integrity",
-      title: "ATS Data Integrity & SLA Monitoring",
-      description: "Enterprise-grade SLA monitoring framework for Applicant Tracking Systems, ensuring 100% relational integrity and stage-time compliance.",
-      image: "ats_data_integrity_sla_monitoring.png",
-      tags: ["HR", "DE"],
-      metrics: {
-        "INTEGRITY": "100.0%",
-        "ANOMALY RATE DETECTED": "3%",
-        "STAGE EVENTS": "30K+"
-      },
-      tech: ["Python", "PostgreSQL", "Power BI"],
-      github: "https://github.com/harthikrm/data-integrity-sla-monitoring-framework"
-    },
-    {
-      id: "customer-churn",
-      title: "Customer Churn Analysis",
-      description: "Predictive retention system using ensemble models to identify high-risk accounts and trigger proactive intervention strategies.",
-      image: "customer_churn_analysis.png",
-      tags: ["ML", "AN"],
-      metrics: {
-        "ACCURACY": "90%",
-        "HIGH-RISK COHORTS": "65%",
-        "MODEL": "XGBoost"
-      },
-      tech: ["Python", "Scikit-Learn", "Matplotlib"],
-      github: "https://github.com/harthikrm/churn-analytics-project"
-    },
-    {
-      id: "retail-forecast",
-      title: "Retail Sales Forecasting",
-      description: "Multi-store sales forecasting system using seasonal decomposition and MASE-optimized regression models.",
-      image: "retail_sales_forecasting.png",
-      tags: ["AN", "BI"],
-      metrics: {
-        "ACCURACY LIFT": "+18%",
-        "SEASONAL PATTERNS": "3",
-        "PRICING SEGMENTS": "2"
-      },
-      tech: ["Python", "Scikit-Learn", "Statsmodels"],
-      link: "#"
-    }
-  ],
-
-  resumes: [
-    { title: "Data Engineer", file: "HarthikMallichetty_DataEngineer.pdf" },
-    { title: "AI Engineer", file: "HarthikMallichetty_AIEngineer.pdf" },
-    { title: "Data Analyst", file: "HarthikMallichetty_DataAnalyst.pdf" },
-    { title: "Quant Research Analyst", file: "HarthikMallichetty_QuantAnalyst.pdf" },
-    { title: "Analytics Engineer", file: "HarthikMallichetty_AnalyticsEngineer.pdf" },
-    { title: "People Analytics", file: "HarthikMallichetty_PeopleAnalytics.pdf" }
-  ],
-
-  experience: [
-    {
-      company: "Prolifics",
-      location: "Hyderabad, India",
-      period: "Feb 2023 — Jul 2024",
-      roles: [
-        {
-          title: "Associate Data Engineer",
-          period: "Jun 2023 — Jul 2024",
-          highlights: [
-            "Designed and deployed a TensorFlow-based sprint risk prediction service as a Flask REST API, giving 15+ engineering managers 1–2 weeks' advance visibility into at-risk sprints.",
-            "Unified 250K+ JIRA and QA execution records through scalable SQL ETL pipelines, creating the trusted dataset that powered both predictive modeling and engineering analytics.",
-            "Drove adoption across 200+ developers by integrating predictions into engineering dashboards, backed by documentation and onboarding across delivery teams."
-          ]
-        },
-        {
-          title: "Data Engineer Intern",
-          period: "Feb 2023 — May 2023",
-          highlights: [
-            "Engineered SQL ETL pipelines that consolidated 100K+ JIRA and PostgreSQL engineering records into reusable analytics datasets, establishing the data foundation for delivery analytics.",
-            "Standardized engineering KPIs for sprint health, defect trends, and delivery performance, creating a shared reporting framework across QA and delivery teams.",
-            "Validated engineering datasets by identifying data quality issues across QA and project systems, improving the reliability of downstream analytics and reporting."
-          ]
-        }
-      ]
-    },
-    {
-      company: "HeiDigi",
-      location: "Hyderabad, India",
-      period: "Mar 2022 — Aug 2022",
-      roles: [
-        {
-          title: "Data Analyst Intern",
-          period: "Mar 2022 — Aug 2022",
-          highlights: [
-            "Built campaign measurement across 20+ marketing campaigns, defining KPIs and automating recurring client reporting through reusable Python and SQL data pipelines.",
-            "Ran experimentation workflows and statistical analyses that identified high-performing audiences and creatives, driving 20% higher ROI and 18% higher CTR."
-          ]
-        }
-      ]
-    }
-  ],
-
-  education: [
-    {
-      school: "University of Texas at Dallas",
-      location: "Richardson, TX",
-      degree: "MS, Business Analytics & Artificial Intelligence",
-      distinction: "Scholar With Distinction",
-      gpa: "3.8 / 4.0",
-      date: "May 2026"
-    },
-    {
-      school: "GITAM University",
-      location: "Hyderabad, India",
-      degree: "BTech, Computer Science & Business Systems",
-      distinction: "",
-      gpa: "3.7 / 4.0",
-      date: "Apr 2024"
-    }
-  ],
-
-  skills: [
-    { label: "Languages & Databases", items: ["Python", "SQL", "R", "JavaScript", "TypeScript", "PostgreSQL", "MySQL", "pgvector", "DuckDB"] },
-    { label: "Data Engineering & Analytics", items: ["ETL", "Data Modeling", "Airflow", "dbt", "Pandas", "Power BI", "Tableau", "A/B Testing"] },
-    { label: "Cloud & Backend", items: ["GCP", "Cloud Run", "Vertex AI", "Cloud SQL", "Docker", "FastAPI", "Flask", "Git", "GitHub Actions"] },
-    { label: "Machine Learning & AI", items: ["TensorFlow", "PyTorch", "Scikit-learn", "Hugging Face", "LangChain", "LangGraph", "OpenAI"] }
-  ]
 };
+
+export const toc = [
+  { no: "01", label: "Intro", href: "#intro" },
+  { no: "02", label: "Selected Work", href: "#work" },
+  { no: "03", label: "Experience", href: "#experience" },
+  { no: "04", label: "Writing", href: "#writing" },
+  { no: "05", label: "About", href: "#about" },
+  { no: "06", label: "Contact", href: "#contact" },
+];
+
+export const intro = {
+  statement: [
+    { t: "I build AI systems that survive contact with " },
+    { t: "production", serif: true },
+    { t: " — the data infrastructure underneath, the models in the middle, and the product on top." },
+  ],
+  body:
+    "Founder of Room, a multi-model AI workspace. Previously data engineering at Prolifics and analytics at HeiDigi. MS in Business Analytics & Artificial Intelligence, UT Dallas, May 2026 — Scholar With Distinction.",
+};
+
+export const work = [
+  {
+    no: "01",
+    id: "room",
+    title: "Room",
+    meta: "2026 — PRESENT · AI ENGINEER & FOUNDER",
+    status: "PRIVATE EARLY ACCESS",
+    statement:
+      "Explain yourself once. Work with whichever AI you want. Room is a multi-model AI workspace that keeps a project's confirmed decisions, constraints and context available across conversations — so GPT, Claude and Gemini work side by side from the same understanding.",
+    points: [
+      "Streams up to three LLMs in parallel over SSE with targeted @-routing, fault isolation and server-side cancellation — running on your own OpenRouter key.",
+      "PostgreSQL-backed project memory that extracts source-linked decisions, constraints and facts. Nothing becomes authoritative without user confirmation.",
+      "Secure multi-tenant persistence on Supabase with Row-Level Security, transactional updates and retry-safe recovery.",
+    ],
+    stats: [
+      { k: "AUTOMATED TESTS", v: "971" },
+      { k: "MEMORY-RECALL EVALS", v: "24/24" },
+      { k: "CROSS-MODEL CONTINUITY", v: "26/26" },
+      { k: "PROMPT INJECTIONS SUCCEEDED", v: "0/30" },
+    ],
+    stack: "Next.js · TypeScript · OpenRouter · Supabase · PostgreSQL · SSE",
+    links: [{ label: "JOINAROOM.APP", url: "https://joinaroom.app" }],
+    note: "The marketing site is public; the app itself is in private early access.",
+    figure: { type: "svg", svg: "room" },
+    caption: "FIG.01 — THREE MODELS, ONE PROJECT MEMORY",
+  },
+  {
+    no: "02",
+    id: "signal",
+    title: "Signal",
+    meta: "2025 · FINANCIAL INTELLIGENCE · END-TO-END BUILD",
+    status: "LIVE",
+    statement:
+      "Hours of SEC-filing research, compressed into seconds of natural-language Q&A across 70 S&P 500 companies.",
+    points: [
+      "10-step RAG pipeline with a self-correcting LangGraph reasoning agent; answers cite back to the underlying filings.",
+      "Data foundation on GCP — Airflow-orchestrated ingestion of SEC EDGAR filings and market data into PostgreSQL.",
+      "Three-layer dbt transformations computing 65 financial metrics per company.",
+    ],
+    stats: [
+      { k: "REQUESTS / FIRST 30 DAYS", v: "800+" },
+      { k: "S&P 500 COMPANIES", v: "70" },
+      { k: "METRICS PER COMPANY", v: "65" },
+      { k: "RAG PIPELINE", v: "10-STEP" },
+    ],
+    stack: "Python · FastAPI · PostgreSQL · pgvector · dbt · Airflow · LangGraph · GCP · React",
+    links: [
+      { label: "SIGNAL.HARTHIK.DEV", url: "https://signal.harthik.dev" },
+      { label: "GITHUB", url: "https://github.com/harthikrm/signal-financial-intelligence" },
+    ],
+    figure: { type: "img", src: "signal_financial_intelligence_platform.png", alt: "Signal — query interface answering questions over SEC filings" },
+    caption: "FIG.02 — SIGNAL / QUERY INTERFACE",
+  },
+  {
+    no: "03",
+    id: "code-sentinel",
+    title: "Code Sentinel",
+    meta: "2026 · LLM FINE-TUNING & MLOPS",
+    statement:
+      "A fine-tuned Mistral-7B that writes first-pass code review on every pull request — and outscores GPT-4o-mini doing it.",
+    points: [
+      "Fine-tuned Mistral-7B-Instruct on 143K real code-review pairs with QLoRA on an NVIDIA H100 — under 1% of parameters trained.",
+      "6.1% higher BERTScore F1 than GPT-4o-mini on held-out review generation.",
+      "Deployed as a FastAPI inference service on Vertex AI, with a GitHub Action that posts model-generated review comments on every PR.",
+    ],
+    stats: [
+      { k: "TRAINING PAIRS", v: "143K" },
+      { k: "BERTSCORE F1 VS GPT-4O-MINI", v: "+6.1%" },
+      { k: "PARAMETERS TRAINED", v: "<1%" },
+      { k: "HARDWARE", v: "1× H100" },
+    ],
+    stack: "PyTorch · Mistral-7B · QLoRA · PEFT · FastAPI · Vertex AI · W&B · GitHub Actions",
+    links: [{ label: "GITHUB", url: "https://github.com/harthikrm/code-sentinel" }],
+    figure: { type: "img", src: "code-sentinel.png", alt: "Code Sentinel — AI-generated review comments posted on a pull request" },
+    caption: "FIG.03 — AUTOMATED REVIEW ON A PULL REQUEST",
+  },
+  {
+    no: "04",
+    id: "mylonite",
+    title: "Mylonite",
+    meta: "RESEARCH · CONCURRENCY TESTING",
+    status: "IN DEVELOPMENT",
+    statement:
+      "Metamorphic testing for concurrent systems — hunting the bugs that only appear between the threads.",
+    points: [
+      "An independent research project applying metamorphic testing to concurrency: generating semantically equivalent interleavings and flagging divergent behaviour.",
+      "Current findings are experimental and unvalidated. This entry will grow as results hold up.",
+    ],
+    stats: [],
+    stack: "",
+    links: [],
+    figure: { type: "svg", svg: "mylonite" },
+    caption: "FIG.04 — INTERLEAVINGS UNDER TEST",
+  },
+];
+
+export const archive = [
+  { title: "Quant Risk Desk", field: "Quant / Risk", stack: "Python · Pandas · SQL · Tableau", url: "https://github.com/harthikrm/quant-risk-desk" },
+  { title: "F1 Race Intelligence", field: "Data Engineering", stack: "Python · PostgreSQL · FastAPI · React", url: "https://github.com/harthikrm/f1-race-intelligence" },
+  { title: "Global Supply Chain Intelligence", field: "ML / Graph", stack: "Python · NetworkX", url: "https://github.com/harthikrm/global-supply-chain-intelligence" },
+  { title: "Smart Home IoT Analytics", field: "ML / Telemetry", stack: "Python · MQTT · Grafana", url: "https://github.com/harthikrm/smart-home-analytics" },
+  { title: "NLP Fake News Detection", field: "Deep Learning", stack: "TensorFlow · Transformers", url: "" },
+  { title: "Merchant Credit Risk", field: "ML / Fraud", stack: "SQL · Python · Tableau", url: "https://github.com/harthikrm/merchant-credit-risk-fraud-monitoring" },
+  { title: "Recruiting & People Systems Analytics", field: "People Analytics", stack: "Power BI · SQL · Python", url: "https://github.com/harthikrm/recruiting-funnel-analytics" },
+  { title: "ATS Data Integrity & SLA Monitoring", field: "Data Quality", stack: "Python · PostgreSQL · Power BI", url: "https://github.com/harthikrm/data-integrity-sla-monitoring-framework" },
+  { title: "Customer Churn Analysis", field: "ML / Retention", stack: "Python · Scikit-Learn", url: "https://github.com/harthikrm/churn-analytics-project" },
+  { title: "Retail Sales Forecasting", field: "Forecasting", stack: "Python · Statsmodels", url: "" },
+  { title: "Job Search Automation Pipeline", field: "AI / Automation", stack: "Python · GPT-4o · n8n · Docker", url: "" },
+];
+
+export const experience = [
+  {
+    company: "Room",
+    location: "Dallas, TX",
+    period: "MAY 2026 — PRESENT",
+    roles: [
+      {
+        title: "AI Engineer & Founder",
+        period: "",
+        points: [
+          "Building a multi-model AI workspace: parallel LLM streaming over SSE, a user-confirmed project-memory pipeline on PostgreSQL, and an LLM evaluation suite — validated by 971 automated tests.",
+          "Live at joinaroom.app; the app is in private early access.",
+        ],
+      },
+    ],
+  },
+  {
+    company: "Prolifics",
+    location: "Hyderabad, India",
+    period: "FEB 2023 — JUL 2024",
+    roles: [
+      {
+        title: "Associate Data Engineer",
+        period: "JUN 2023 — JUL 2024",
+        points: [
+          "Designed and deployed a TensorFlow-based sprint-risk prediction service as a Flask REST API, giving 15+ engineering managers one to two weeks' advance visibility into at-risk sprints.",
+          "Built SQL ETL pipelines integrating 250K+ Jira and QA records into datasets for risk modelling and analytics.",
+          "Integrated risk predictions into dashboards for delivery teams of 200+ developers, with documentation and onboarding.",
+        ],
+      },
+      {
+        title: "Data Engineer Intern",
+        period: "FEB 2023 — MAY 2023",
+        points: [
+          "Consolidated 100K+ Jira and PostgreSQL records into reusable engineering analytics datasets through SQL ETL pipelines.",
+          "Standardised sprint-health, defect-trend and delivery KPIs, giving QA and delivery teams one shared reporting framework.",
+        ],
+      },
+    ],
+  },
+  {
+    company: "HeiDigi",
+    location: "Hyderabad, India",
+    period: "MAR 2022 — AUG 2022",
+    roles: [
+      {
+        title: "Data Analyst Intern",
+        period: "",
+        points: [
+          "Automated KPI reporting for 20+ marketing campaigns using Python and SQL, standardising measurement.",
+          "Analysed campaign experiments to find top audiences and creatives, contributing to 20% higher ROI and 18% higher CTR.",
+        ],
+      },
+    ],
+  },
+];
+
+export const education = [
+  {
+    school: "University of Texas at Dallas",
+    degree: "MS, Business Analytics & Artificial Intelligence",
+    detail: "Scholar With Distinction · GPA 3.8/4.0",
+    date: "MAY 2026",
+  },
+  {
+    school: "GITAM University",
+    degree: "BTech, Computer Science & Business Systems",
+    detail: "GPA 8.52/10",
+    date: "APR 2024",
+  },
+];
+
+export const programs = [
+  "McKinsey.org Forward Program — 2026",
+  "IBM Data Analytics Academic Internship — 2023",
+];
+
+export const writing = [
+  {
+    title: "From Code Review to ARC-AGI-2: Reusing the Same ML Muscle on a Harder Reasoning Problem",
+    date: "OCT 2026",
+    summary: "What fine-tuning Code Sentinel taught me, applied to abstract reasoning on ARC-AGI-2.",
+    url: "https://medium.com/@hrmallichetty/from-code-review-to-arc-agi-2-reusing-the-same-ml-muscle-on-a-harder-reasoning-problem-a4be66501d3b",
+  },
+  {
+    title: "When Feedback Backfires: Can Better Feedback Teach AI Agents to Game the System?",
+    date: "SEP 2026",
+    summary: "Reward hacking and evaluation integrity — does telling an agent exactly why it failed teach it to fix the task, or to game the grader?",
+    url: "https://medium.com/@hrmallichetty/when-feedback-backfires-can-better-feedback-teach-ai-agents-to-game-the-system-5a03d05d9262",
+  },
+];
+
+export const competitions = [
+  { name: "ARC Prize 2026", detail: "ARC-AGI-2" },
+  { name: "Kaggle", detail: "Gemma 4 Developer Agent Competition" },
+  { name: "Meta Global AI Developer Hackathon", detail: "2026" },
+];
+
+export const about = {
+  body:
+    "I'm Harthik — an engineer who likes the unglamorous parts of AI: the ingestion jobs, the eval suites, the memory models, the deployment plumbing. I'd rather ship one system that holds up under real users than ten demos. Away from the keyboard: golf, poker, chess, fishing, camping, cooking, cricket, soccer and Formula 1.",
+  capabilities: [
+    { label: "Languages & Databases", items: "Python, SQL, R, JavaScript, TypeScript, PostgreSQL, MySQL, pgvector, DuckDB" },
+    { label: "Data Engineering & Analytics", items: "ETL/ELT, data modelling, Airflow, dbt, Pandas, Power BI, Tableau, A/B testing" },
+    { label: "Cloud & Backend", items: "GCP (Cloud Run, Vertex AI, Cloud SQL), Next.js, Supabase, Docker, FastAPI, Git, GitHub Actions" },
+    { label: "Machine Learning & AI", items: "TensorFlow, PyTorch, Scikit-learn, Hugging Face, QLoRA, LangChain, RAG, LLM evaluation" },
+  ],
+};
+
+export const resumes = [
+  { title: "Résumé — General", file: "HarthikMallichetty_Resume.pdf", primary: true },
+  { title: "Data Engineer", file: "HarthikMallichetty_DataEngineer.pdf" },
+  { title: "AI Engineer", file: "HarthikMallichetty_AIEngineer.pdf" },
+  { title: "Data Analyst", file: "HarthikMallichetty_DataAnalyst.pdf" },
+  { title: "Analytics Engineer", file: "HarthikMallichetty_AnalyticsEngineer.pdf" },
+  { title: "Quant Research Analyst", file: "HarthikMallichetty_QuantAnalyst.pdf" },
+  { title: "People Analytics", file: "HarthikMallichetty_PeopleAnalytics.pdf" },
+];

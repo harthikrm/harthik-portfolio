@@ -1,565 +1,405 @@
 import './style.css'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { createIcons, Monitor, PieChart, Users, Database, Cpu, Mail, ArrowRight, FileText, Download } from 'lucide'
-import { portfolioData } from './data'
 import { inject } from '@vercel/analytics'
+import {
+  site, toc, intro, work, archive, experience,
+  education, programs, writing, competitions, about, resumes,
+} from './data'
 
-// Initialize Vercel Analytics
 inject()
-
 gsap.registerPlugin(ScrollTrigger)
 
-// --- STATE MANAGEMENT ---
-let currentRole = 'ALL'
-let hasInitialized = false
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+if (reducedMotion) document.documentElement.classList.add('reduced-motion')
 
-// --- UI COMPONENTS ---
+const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
-const renderApp = (isInitial = false) => {
-  const root = document.querySelector('#app')
-
-  if (isInitial) {
-    root.innerHTML = `
-      <div class="intro-overlay">
-        <div class="intro-panel"></div>
-        <div class="logo" style="z-index: 10001; opacity: 0; transform: translateY(20px);">HARTHIK.SYS</div>
-      </div>
-      <div class="cursor-dot"></div>
-      <div class="cursor-outline"></div>
-      <div class="bg-grid"></div>
-      
-      <header>
-        <div class="container nav-inner">
-          <div class="logo">HARTHIK.SYS</div>
-          <nav class="nav-links">
-            <a href="#projects">Work</a>
-            <a href="#experience">Experience</a>
-            <a href="#about">Bio</a>
-            <a href="#contact">Contact</a>
-          </nav>
-        </div>
-      </header>
-
-      <div id="content-wrap">
-         ${renderContent()}
-      </div>
-
-       <section id="resumes" class="resumes">
-        <div class="container">
-          <span class="case-tag">Portfolio Access</span>
-          <h2 class="section-title">Which role are you hiring for?</h2>
-          <div class="resume-grid">
-            ${portfolioData.resumes.map(r => `
-              <a href="/resumes/${r.file}" download class="resume-card magnetic-wrap" data-resume-role="${r.title}">
-                <div class="resume-card-inner">
-                  <i data-lucide="file-text"></i>
-                  <span class="resume-role">${r.title}</span>
-                  <i data-lucide="download" class="download-icon"></i>
-                </div>
-              </a>
-            `).join('')}
-          </div>
-        </div>
-      </section>
-
-      <footer id="contact" style="opacity: ${hasInitialized ? 1 : 0};">
-        <div class="container">
-          <span class="case-tag">Direct Access</span>
-          <a href="mailto:${portfolioData.profile.email}" class="footer-email">${portfolioData.profile.email}</a>
-          <div class="nav-links" style="justify-content: flex-start;">
-             <a href="https://${portfolioData.profile.github}" target="_blank" class="magnetic-wrap">GITHUB</a>
-             <a href="https://${portfolioData.profile.linkedin}" target="_blank" class="magnetic-wrap">LINKEDIN</a>
-          </div>
-        </div>
-      </footer>
-    `
-    initializeIntro()
-  } else {
-    document.querySelector('#content-wrap').innerHTML = renderContent()
-    // Scroll to top or handle transitions
-  }
-
-  initializeInteractions()
-  initializeIcons()
-  if (hasInitialized) initializeAnimations()
-  if (hasInitialized) _initSectionPets()
-  if (hasInitialized) _placePerchers()
+// ── Inline SVG figures (Room / Mylonite) ─────────────────────────
+const FIGURES = {
+  // Three model streams converging into one persistent memory line.
+  room: `
+  <svg viewBox="0 0 640 420" role="img" aria-label="Diagram: three model streams converging into one project memory line" xmlns="http://www.w3.org/2000/svg">
+    <rect width="640" height="420" fill="none"/>
+    <g stroke="#141414" fill="none" stroke-width="1.5">
+      <path d="M60 90 H300 Q340 90 360 140 L380 190"/>
+      <path d="M60 210 H340 L380 210"/>
+      <path d="M60 330 H300 Q340 330 360 280 L380 230"/>
+      <path d="M380 210 H580" stroke-width="3"/>
+    </g>
+    <g fill="#141414" font-family="IBM Plex Mono, monospace" font-size="13" letter-spacing="1">
+      <text x="60" y="76">GPT</text>
+      <text x="60" y="196">CLAUDE</text>
+      <text x="60" y="316">GEMINI</text>
+      <text x="420" y="196">PROJECT MEMORY</text>
+    </g>
+    <g fill="#2b45ff">
+      <circle cx="60" cy="90" r="4"/>
+      <circle cx="60" cy="210" r="4"/>
+      <circle cx="60" cy="330" r="4"/>
+      <circle cx="580" cy="210" r="5"/>
+    </g>
+    <g stroke="#141414" stroke-opacity="0.25" stroke-dasharray="2 5" fill="none">
+      <path d="M60 130 H280"/><path d="M60 250 H280"/><path d="M60 290 H280"/>
+    </g>
+  </svg>`,
+  // Two interleavings of the same program, diverging.
+  mylonite: `
+  <svg viewBox="0 0 640 420" role="img" aria-label="Diagram: two thread interleavings of the same program diverging" xmlns="http://www.w3.org/2000/svg">
+    <rect width="640" height="420" fill="none"/>
+    <g stroke="#141414" fill="none" stroke-width="1.5">
+      <path d="M60 140 H230 L290 200 H400 L460 140 H580"/>
+      <path d="M60 200 H230 L290 140 H400 L460 200 H510"/>
+      <path d="M60 280 H580" stroke-opacity="0.3"/>
+    </g>
+    <path d="M510 200 L580 260" stroke="#2b45ff" fill="none" stroke-width="2"/>
+    <g fill="#141414" font-family="IBM Plex Mono, monospace" font-size="13" letter-spacing="1">
+      <text x="60" y="126">T1</text>
+      <text x="60" y="186">T2</text>
+      <text x="60" y="266" fill-opacity="0.4">EXPECTED</text>
+      <text x="470" y="296" fill="#2b45ff">DIVERGENCE</text>
+    </g>
+    <circle cx="580" cy="260" r="5" fill="#2b45ff"/>
+    <g stroke="#141414" stroke-opacity="0.25" stroke-dasharray="2 5" fill="none">
+      <path d="M230 100 V320"/><path d="M400 100 V320"/>
+    </g>
+  </svg>`,
 }
 
-const renderContent = () => {
-  return `
-    <main style="opacity: ${hasInitialized ? 1 : 0};">
-      <section class="hero">
-        <div class="container hero-content">
-          <span class="hero-label">SYSTEM STATUS: OPERATIONAL // V.2.0.26</span>
-          <h1>
-            <span>DATA ENGINEER <br>&amp; AI/ML ENGINEER</span>
-          </h1>
-          <p class="hero-tagline">Production systems. Not portfolio demos.</p>
-          <div class="role-switcher">
-            <button class="role-btn ${currentRole === 'ALL' ? 'active' : ''}" data-role="ALL">All Categories</button>
-            ${portfolioData.roles.map(r => `
-              <button class="role-btn ${currentRole === r.id ? 'active' : ''}" data-role="${r.id}">
-                ${r.label}
-              </button>
-            `).join('')}
-          </div>
-        </div>
-      </section>
-
-      <section id="projects" class="cases">
-        <div class="container">
-          ${renderProjects(currentRole)}
-        </div>
-      </section>
-
-      <section id="about" class="about">
-        <div class="container">
-          <span class="case-tag">Bio // Narrative</span>
-          <div class="about-grid">
-             <div class="about-text">
-                <p class="bio-statement">${portfolioData.profile.summary}</p>
-                <div class="bio-details">
-                   <div class="detail-item">
-                      <span class="detail-label">Graduated</span>
-                      <span class="detail-value">May 2026 · UT Dallas</span>
-                   </div>
-                   <div class="detail-item">
-                      <span class="detail-label">Domain</span>
-                      <span class="detail-value">AI · ML · Data Engineering</span>
-                   </div>
-                   <div class="detail-item status-available">
-                      <span class="detail-label">Status</span>
-                      <span class="detail-value"><span class="status-dot"></span>Available for FTE Now</span>
-                   </div>
-                </div>
-             </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="experience" class="experience">
-        <div class="container">
-          <span class="case-tag">Track Record // Deployment History</span>
-          <h2 class="section-title">Work Experience</h2>
-          <div class="xp-timeline">
-            ${portfolioData.experience.map(company => `
-              <div class="xp-company">
-                <div class="xp-company-head">
-                  <div>
-                    <h3 class="xp-company-name">${company.company}</h3>
-                    <span class="xp-location">${company.location}</span>
-                  </div>
-                  <span class="xp-period">${company.period}</span>
-                </div>
-                ${company.roles.map(role => `
-                  <div class="xp-role">
-                    <div class="xp-role-head">
-                      <span class="xp-role-title">${role.title}</span>
-                      <span class="xp-role-period">${role.period}</span>
-                    </div>
-                    <ul class="xp-highlights">
-                      ${role.highlights.map(h => `<li>${h}</li>`).join('')}
-                    </ul>
-                  </div>
-                `).join('')}
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      </section>
-
-      <section id="credentials" class="credentials">
-        <div class="container">
-          <div class="cred-grid">
-            <div class="cred-col">
-              <span class="case-tag">Credentials // Formal Training</span>
-              <h2 class="section-title">Education</h2>
-              ${portfolioData.education.map(ed => `
-                <div class="edu-card">
-                  <div class="edu-head">
-                    <h3 class="edu-school">${ed.school}</h3>
-                    <span class="edu-date">${ed.date}</span>
-                  </div>
-                  <p class="edu-degree">${ed.degree}</p>
-                  <div class="edu-meta">
-                    ${ed.distinction ? `<span class="edu-distinction">★ ${ed.distinction}</span>` : ''}
-                    <span class="edu-gpa">GPA ${ed.gpa}</span>
-                    <span class="edu-location">${ed.location}</span>
-                  </div>
-                </div>
-              `).join('')}
-            </div>
-            <div class="cred-col">
-              <span class="case-tag">Arsenal // Tooling</span>
-              <h2 class="section-title">Skills</h2>
-              ${portfolioData.skills.map(group => `
-                <div class="skill-group">
-                  <span class="skill-label">${group.label}</span>
-                  <div class="tech-pills">
-                    ${group.items.map(s => `<span class="tech-pill">${s}</span>`).join('')}
-                  </div>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-  `
-}
-
-const initializeIntro = () => {
-  if (hasInitialized) return
-
-  const tl = gsap.timeline()
-
-  tl.to('.intro-overlay .logo', { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" })
-    .to('.intro-panel', { scaleY: 1, duration: 1, ease: "power4.inOut" }, "+=0.2")
-    .to('.intro-overlay', { yPercent: -100, duration: 1, ease: "power4.inOut" })
-    .to('main, footer', { opacity: 1, duration: 0.4 }, "-=0.5")
-    .call(() => {
-      hasInitialized = true
-      initializeAnimations()
-      initializePixelPets()
-    })
-}
-
-const GH_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58 0-.28-.01-1.03-.02-2.02-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22 0 1.6-.01 2.9-.01 3.29 0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>`
-const EXT_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`
-
-const renderProjects = (role) => {
-  const projects = role === 'ALL'
-    ? portfolioData.projects
-    : portfolioData.projects.filter(p => p.tags.includes(role))
-
-  return projects.map((p, i) => `
-    <div class="case-item ${i % 2 !== 0 ? 'reverse' : ''}${p.featured ? ' featured-item' : ''}" id="${p.id}">
-      <div class="case-info">
-        <div class="case-tag-row">
-          <span class="case-tag">${p.tags.join(' / ')}</span>
-          ${p.featured ? '<span class="featured-badge">★ FEATURED</span>' : ''}
-        </div>
-        <h2 class="project-title-wrap">
-          ${p.title}
-          <span class="project-links">
-            ${p.link && p.link !== '#' ? `<a href="${p.link}" target="_blank" rel="noopener noreferrer" class="project-live-link" title="${p.link.includes('github') ? 'View on GitHub' : 'Live Demo'}">${p.link.includes('github') ? GH_ICON : EXT_ICON}</a>` : ''}
-            ${p.github ? `<a href="${p.github}" target="_blank" rel="noopener noreferrer" class="project-live-link project-gh-link" title="View on GitHub">${GH_ICON}</a>` : ''}
-          </span>
-        </h2>
-        <p class="case-description">${p.description}</p>
-        <div class="metric-grid">
-          ${Object.entries(p.metrics).map(([label, value]) => `
-            <div class="metric-item">
-              <span class="metric-value">${value}</span>
-              <span class="metric-label">${label}</span>
-            </div>
-          `).join('')}
-        </div>
-        ${p.tech && p.tech.length ? `
-        <div class="tech-pills">
-          ${p.tech.map(t => `<span class="tech-pill">${t}</span>`).join('')}
-        </div>` : ''}
+// ── Render ───────────────────────────────────────────────────────
+const renderHeader = () => `
+  <a class="skip-link" href="#work">Skip to work</a>
+  <header>
+    <div class="container nav-inner">
+      <div class="nav-id">
+        <a href="#intro" class="mono">HARTHIK_MALLICHETTY</a>
+        <span class="mono nav-section-indicator" id="section-indicator" aria-hidden="true">/01 INTRO</span>
       </div>
-      <div class="case-visual">
-         <img src="/projects/${p.image}" alt="${p.title}" class="project-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-         <div class="visual-placeholder" style="display: none;">VISUALIZING ${p.id.toUpperCase()} // PENDING RENDER</div>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#work">Work</a>
+        <a href="#experience">Experience</a>
+        <a href="#writing">Writing</a>
+        <a href="#about">About</a>
+        <a href="mailto:${site.email}" class="nav-talk">Let's talk</a>
+      </nav>
+    </div>
+  </header>`
+
+const renderHero = () => `
+  <section class="hero" id="intro" style="border-top:0">
+    <div class="container hero-top">
+      <nav class="hero-index mono" aria-label="Page index">
+        ${toc.map((t) => `<a href="${t.href}">${t.label}</a><span class="mono-dim">P.${t.no}</span>`).join('')}
+      </nav>
+    </div>
+    <div class="container hero-main">
+      <h1 class="hero-name">
+        <span class="line"><span>Harthik</span></span>
+        <span class="line"><span>Mallichetty</span></span>
+      </h1>
+      <div class="hero-sub">
+        <p class="hero-role">${site.role} — <em>${site.founderLine}</em><br>
+          <span class="mono mono-dim" style="letter-spacing:.08em">BASED IN ${site.location.toUpperCase()}</span>
+        </p>
+        <div class="hero-status">
+          <span class="mono"><span class="status-dot"></span>${site.status.toUpperCase()}</span>
+          <span class="mono mono-dim">${site.version} · <span id="local-time">DAL --:--</span></span>
+        </div>
       </div>
     </div>
-  `).join('')
+    <div class="container hero-foot">
+      <span class="mono mono-dim">[ SCROLL TO EXPLORE ]</span>
+      <div class="hero-foot-links">
+        ${site.links.map((l) => `<a class="mono mono-dim" href="${l.url}" target="_blank" rel="noopener noreferrer">${l.label.toUpperCase()} ↗</a>`).join('')}
+      </div>
+    </div>
+  </section>`
+
+const renderIntro = () => `
+  <section id="statement" aria-label="Introduction">
+    <div class="container">
+      <p class="intro-statement reveal">${intro.statement
+        .map((p) => (p.serif ? `<span class="serif-accent">${esc(p.t)}</span>` : esc(p.t)))
+        .join('')}</p>
+      <p class="intro-body reveal">${esc(intro.body)}</p>
+    </div>
+  </section>`
+
+const renderWorkEntry = (w) => `
+  <article class="work-entry" id="${w.id}">
+    <div class="work-info reveal">
+      <p class="work-no">/${w.no}
+        <span class="mono-dim">${esc(w.meta)}</span>
+        ${w.status ? `<span class="work-status mono ${w.status === 'LIVE' ? 'live' : ''}">${w.status}</span>` : ''}
+      </p>
+      <h3 class="work-title">${w.links.length
+        ? `<a href="${w.links[0].url}" target="_blank" rel="noopener noreferrer">${esc(w.title)}</a>`
+        : esc(w.title)}</h3>
+      <p class="work-statement">${esc(w.statement)}</p>
+      <ul class="work-points">${w.points.map((p) => `<li>${esc(p)}</li>`).join('')}</ul>
+      ${w.stats.length ? `<div class="work-stats">${w.stats
+        .map((s) => `<div class="work-stat"><b>${esc(s.v)}</b><span>${esc(s.k)}</span></div>`)
+        .join('')}</div>` : ''}
+      ${w.stack ? `<p class="work-stack mono">${esc(w.stack)}</p>` : ''}
+      ${w.links.length ? `<div class="work-links">${w.links
+        .map((l) => `<a href="${l.url}" target="_blank" rel="noopener noreferrer">↗ ${esc(l.label)}</a>`)
+        .join('')}</div>` : ''}
+      ${w.note ? `<p class="work-note">${esc(w.note)}</p>` : ''}
+    </div>
+    <figure class="work-figure reveal">
+      <div class="figure-frame">${w.figure.type === 'img'
+        ? `<img src="/projects/${w.figure.src}" alt="${esc(w.figure.alt)}" loading="lazy" width="1280" height="800">`
+        : FIGURES[w.figure.svg]}</div>
+      <figcaption class="figure-caption mono"><span>${esc(w.caption)}</span><span class="mono-dim">HM_26</span></figcaption>
+    </figure>
+  </article>`
+
+const renderWork = () => `
+  <section id="work">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Selected <span class="serif-accent">work</span></h2>
+        <span class="mono mono-dim">/02 — P.02</span>
+      </div>
+      ${work.map(renderWorkEntry).join('')}
+
+      <div class="archive reveal">
+        <div class="archive-head">
+          <h3 class="mono">ARCHIVE — ${archive.length} PROJECTS</h3>
+          <span class="mono mono-dim">2024 — 2026</span>
+        </div>
+        <div class="archive-table">
+          ${archive.map((a, i) => {
+            const inner = `
+              <span class="mono mono-dim">${String(i + 1).padStart(2, '0')}</span>
+              <span class="proj">${esc(a.title)}</span>
+              <span class="mono mono-dim field">${esc(a.field)}</span>
+              <span class="mono mono-dim stack">${esc(a.stack)}</span>
+              <span class="arrow">${a.url ? '↗' : ''}</span>`
+            return a.url
+              ? `<a class="archive-row" href="${a.url}" target="_blank" rel="noopener noreferrer">${inner}</a>`
+              : `<div class="archive-row">${inner}</div>`
+          }).join('')}
+        </div>
+      </div>
+    </div>
+  </section>`
+
+const renderExperience = () => `
+  <section id="experience">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Experience</h2>
+        <span class="mono mono-dim">/03 — P.03</span>
+      </div>
+      ${experience.map((x) => `
+        <div class="xp-block reveal">
+          <div class="xp-meta">
+            <h3 class="xp-company">${esc(x.company)}</h3>
+            <span class="mono mono-dim">${esc(x.period)}</span>
+            <span class="mono mono-dim">${esc(x.location).toUpperCase()}</span>
+          </div>
+          <div>
+            ${x.roles.map((r) => `
+              <div class="xp-role">
+                <div class="xp-role-head">
+                  <span class="xp-role-title">${esc(r.title)}</span>
+                  ${r.period ? `<span class="mono mono-dim">${esc(r.period)}</span>` : ''}
+                </div>
+                <ul class="xp-points">${r.points.map((p) => `<li>${esc(p)}</li>`).join('')}</ul>
+              </div>`).join('')}
+          </div>
+        </div>`).join('')}
+
+      <div class="edu-grid reveal">
+        ${education.map((e) => `
+          <div class="edu-cell">
+            <h3 class="edu-school">${esc(e.school)}</h3>
+            <p class="edu-degree">${esc(e.degree)}</p>
+            <div class="edu-foot">
+              <span class="mono mono-dim">${esc(e.detail).toUpperCase()}</span>
+              <span class="mono">${esc(e.date)}</span>
+            </div>
+          </div>`).join('')}
+      </div>
+      <div class="programs-line reveal">
+        ${programs.map((p) => `<span class="mono mono-dim">${esc(p).toUpperCase()}</span>`).join('')}
+      </div>
+    </div>
+  </section>`
+
+const renderWriting = () => `
+  <section id="writing">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Writing <span class="serif-accent">&amp; research</span></h2>
+        <span class="mono mono-dim">/04 — P.04</span>
+      </div>
+      <div class="writing-list reveal">
+        ${writing.map((w) => `
+          <a class="writing-row" href="${w.url}" target="_blank" rel="noopener noreferrer">
+            <span class="mono mono-dim wdate">${esc(w.date)}</span>
+            <span class="writing-title">${esc(w.title)}</span>
+            <span class="writing-summary">${esc(w.summary)}</span>
+            <span class="arrow">↗</span>
+          </a>`).join('')}
+      </div>
+      <div class="writing-foot reveal">
+        <a class="mono" href="https://medium.com/@hrmallichetty" target="_blank" rel="noopener noreferrer">ALL WRITING ON MEDIUM ↗</a>
+      </div>
+
+      <div class="comp-strip reveal">
+        <h3 class="mono" style="margin-bottom:10px">COMPETITIONS — ACTIVE &amp; RECENT</h3>
+        ${competitions.map((c) => `
+          <div class="comp-row">
+            <span class="comp-name">${esc(c.name)}</span>
+            <span class="mono mono-dim">${esc(c.detail).toUpperCase()}</span>
+          </div>`).join('')}
+      </div>
+    </div>
+  </section>`
+
+const renderAbout = () => `
+  <section id="about">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">About</h2>
+        <span class="mono mono-dim">/05 — P.05</span>
+      </div>
+      <div class="about-grid">
+        <p class="about-body reveal">${esc(about.body)}</p>
+        <div class="cap-list reveal">
+          ${about.capabilities.map((c) => `
+            <div class="cap-row">
+              <span class="mono">${esc(c.label).toUpperCase()}</span>
+              <p>${esc(c.items)}</p>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="resume-block reveal">
+        <div class="archive-head">
+          <h3 class="mono">RÉSUMÉ — BY ROLE</h3>
+          <span class="mono mono-dim">PDF</span>
+        </div>
+        <div class="resume-list">
+          ${resumes.map((r) => `
+            <a class="resume-row ${r.primary ? 'primary' : ''}" href="/resumes/${r.file}" download>
+              <span class="rt">${esc(r.title)}</span>
+              <span class="mono">↓ PDF</span>
+            </a>`).join('')}
+        </div>
+      </div>
+    </div>
+  </section>`
+
+const renderContact = () => `
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="section-head" style="margin-bottom:clamp(40px,6vh,80px)">
+        <span class="mono" style="color:inherit">DIRECT ACCESS</span>
+        <span class="mono" style="opacity:.5">/06 — P.06</span>
+      </div>
+      <h2 class="contact-head">Let's build<br><em>something real.</em></h2>
+      <a class="contact-email" href="mailto:${site.email}">${site.email}</a>
+      <div class="contact-links">
+        ${site.links.map((l) => `<a class="mono" href="${l.url}" target="_blank" rel="noopener noreferrer">${l.label.toUpperCase()} ↗</a>`).join('')}
+        <a class="mono" href="/resumes/${resumes[0].file}" download>RÉSUMÉ ↓</a>
+      </div>
+      <div class="contact-foot mono">
+        <span>© 2026 HARTHIK MALLICHETTY</span>
+        <span>DALLAS, TX — <span id="footer-time">--:--</span></span>
+        <span>SET IN SWITZER, INSTRUMENT SERIF &amp; IBM PLEX MONO</span>
+        <span>DESIGNED &amp; BUILT BY HM</span>
+      </div>
+    </div>
+  </section>`
+
+document.querySelector('#app').innerHTML = [
+  renderHeader(), '<main id="main">', renderHero(), renderIntro(),
+  renderWork(), renderExperience(), renderWriting(), renderAbout(),
+  '</main>', renderContact(),
+].join('')
+
+// ── Behaviour ────────────────────────────────────────────────────
+
+// Dallas clock
+const fmtTime = () =>
+  new Intl.DateTimeFormat('en-US', {
+    hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'America/Chicago',
+  }).format(new Date())
+
+const tick = () => {
+  const t = fmtTime()
+  const a = document.getElementById('local-time')
+  const b = document.getElementById('footer-time')
+  if (a) a.textContent = `DAL ${t}`
+  if (b) b.textContent = `${t} CT`
+}
+tick()
+setInterval(tick, 30_000)
+
+// Header border on scroll
+const header = document.querySelector('header')
+addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 10), { passive: true })
+
+// Current-section indicator
+const indicator = document.getElementById('section-indicator')
+const sections = [
+  ['intro', '/01 INTRO'], ['statement', '/01 INTRO'], ['work', '/02 WORK'],
+  ['experience', '/03 EXPERIENCE'], ['writing', '/04 WRITING'],
+  ['about', '/05 ABOUT'], ['contact', '/06 CONTACT'],
+]
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((en) => {
+    if (!en.isIntersecting) return
+    const hit = sections.find(([id]) => id === en.target.id)
+    if (hit && indicator) indicator.textContent = hit[1]
+    document.querySelectorAll('.nav-links a[href^="#"]').forEach((a) => {
+      a.setAttribute('aria-current', a.getAttribute('href') === `#${en.target.id}` ? 'true' : 'false')
+    })
+  })
+}, { rootMargin: '-40% 0px -55% 0px' })
+sections.forEach(([id]) => {
+  const el = document.getElementById(id)
+  if (el) io.observe(el)
+})
+
+// Motion
+const showAllReveals = () => {
+  document.querySelectorAll('.reveal').forEach((el) => {
+    el.style.opacity = 1
+    el.style.visibility = 'visible'
+    el.style.transform = 'none'
+  })
 }
 
-const initializeAnimations = () => {
-  // Only animate hero if we just initialized or switched roles
-  const heroLines = document.querySelectorAll('.hero h1 span')
-  gsap.from(heroLines, {
-    y: 100,
-    opacity: 0,
-    duration: 1.2,
-    stagger: 0.15,
-    ease: "power4.out"
-  })
-
-  gsap.from('.role-btn', {
-    y: 20,
-    opacity: 0,
-    duration: 0.5,
-    stagger: 0.02,
-    ease: "power2.out"
-  })
-
-  // Case Scrollytelling
-  document.querySelectorAll('.case-item').forEach(el => {
-    gsap.from(el.querySelector('.case-info'), {
-      scrollTrigger: {
-        trigger: el,
-        start: "top 80%",
-        toggleActions: "play none none reverse"
-      },
-      opacity: 0,
-      y: 40,
-      duration: 1,
-      ease: "power3.out"
-    })
-  })
-
-  // Experience / Education / Skills reveal
-  document.querySelectorAll('.xp-company, .edu-card, .skill-group').forEach(el => {
-    gsap.from(el, {
-      scrollTrigger: {
-        trigger: el,
-        start: "top 85%",
-        toggleActions: "play none none reverse"
-      },
-      opacity: 0,
-      y: 30,
-      duration: 0.9,
-      ease: "power3.out"
-    })
-  })
-}
-
-const initializeInteractions = () => {
-  const dot = document.querySelector('.cursor-dot')
-  const outline = document.querySelector('.cursor-outline')
-
-  if (dot && outline) {
-    window.addEventListener('mousemove', (e) => {
-      gsap.to(dot, { x: e.clientX, y: e.clientY, duration: 0, opacity: 1 })
-      gsap.to(outline, { x: e.clientX, y: e.clientY, duration: 0.15, opacity: 1 })
-    })
-  }
-
-  document.querySelectorAll('.role-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      currentRole = e.target.dataset.role
-
-      const roleData = portfolioData.roles.find(r => r.id === currentRole)
-      if (roleData) {
-        document.documentElement.style.setProperty('--accent', roleData.color)
-        document.documentElement.style.setProperty('--accent-rgb', hexToRgb(roleData.color))
-      } else {
-        document.documentElement.style.setProperty('--accent', '#3b82f6')
-        document.documentElement.style.setProperty('--accent-rgb', '59, 130, 246')
-      }
-
-      renderApp()
-    })
-
-    btn.addEventListener('mousemove', (e) => {
-      const position = btn.getBoundingClientRect()
-      const x = e.clientX - position.left - position.width / 2
-      const y = e.clientY - position.top - position.height / 2
-      gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: "power2.out" })
-      if (outline) gsap.to(outline, { scale: 2, duration: 0.3 })
-    })
-
-    btn.addEventListener('mouseleave', () => {
-      gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" })
-      if (outline) gsap.to(outline, { scale: 1, duration: 0.3 })
-    })
-  })
-}
-
-const hexToRgb = (hex) => {
-  const r = parseInt(hex.slice(1, 3), 16)
-  const g = parseInt(hex.slice(3, 5), 16)
-  const b = parseInt(hex.slice(5, 7), 16)
-  return `${r}, ${g}, ${b}`
-}
-
-const initializeIcons = () => {
+if (!reducedMotion) {
   try {
-    createIcons({
-      icons: { Monitor, PieChart, Users, Database, Cpu, Mail, ArrowRight, FileText, Download }
+    gsap.from('.hero-name .line > span', {
+      yPercent: 110, duration: 1.1, stagger: 0.12, ease: 'power4.out', delay: 0.15,
     })
-  } catch (e) {
-    console.warn('Lucide icons load bypass')
-  }
-}
-
-// ── Pixel Pets ────────────────────────────────────────────────────
-// 0=transparent 1=body 2=shadow/dark 3=highlight/eye
-const PET_S = 5
-
-const PET_ART = {
-  cat: {
-    pal: ['#c084fc','#7c3aed','#f0abfc'],
-    fr: [
-      [[0,0,1,0,1,0,0],[0,1,1,1,1,1,0],[1,1,3,1,1,3,1],[1,1,1,1,1,1,1],[0,1,2,1,1,2,1],[0,1,0,0,0,1,0],[0,1,0,0,0,1,0]],
-      [[0,0,1,0,1,0,0],[0,1,1,1,1,1,0],[1,1,3,1,1,3,1],[1,1,1,1,1,1,1],[0,1,2,1,1,2,1],[0,0,1,0,1,0,0],[0,0,0,1,0,1,0]],
-    ]
-  },
-  bot: {
-    pal: ['#60a5fa','#1d4ed8','#bfdbfe'],
-    fr: [
-      [[0,1,1,1,1,1,0],[1,3,1,1,1,3,1],[1,1,1,1,1,1,1],[0,0,1,1,1,0,0],[0,1,1,1,1,1,0],[0,1,0,1,0,1,0],[0,0,1,0,1,0,0]],
-      [[0,1,1,1,1,1,0],[1,3,1,1,1,3,1],[1,1,1,1,1,1,1],[0,0,1,1,1,0,0],[0,1,1,1,1,1,0],[0,0,1,0,0,1,0],[0,0,0,1,1,0,0]],
-    ]
-  },
-  duck: {
-    pal: ['#fbbf24','#d97706','#fef3c7'],
-    fr: [
-      [[0,0,1,1,0,0,0],[0,1,3,1,1,0,0],[0,1,1,1,1,0,0],[0,0,1,1,1,0,0],[0,1,1,1,1,1,0],[1,1,1,1,1,1,1],[0,1,1,1,1,0,0],[0,0,1,0,1,0,0]],
-      [[0,0,1,1,0,0,0],[0,1,3,1,1,0,0],[0,1,1,1,1,0,0],[0,0,1,1,1,0,0],[0,1,1,1,1,1,0],[1,1,1,1,1,1,1],[0,1,1,1,1,0,0],[0,0,0,1,0,0,0]],
-    ]
-  },
-  frog: {
-    pal: ['#4ade80','#15803d','#bbf7d0'],
-    fr: [
-      [[0,1,0,0,0,1,0],[1,1,1,1,1,1,1],[1,1,3,1,1,3,1],[0,1,1,2,1,1,0],[1,0,1,1,1,0,1],[1,0,0,0,0,0,1]],
-      [[0,1,0,0,0,1,0],[1,1,1,1,1,1,1],[1,1,3,1,1,3,1],[0,1,1,2,1,1,0],[0,1,0,0,0,1,0],[0,1,0,0,0,1,0]],
-    ]
-  },
-  ghost: {
-    pal: ['rgba(255,255,255,0.82)','rgba(147,197,253,0.65)','rgba(255,255,255,0.97)'],
-    fr: [
-      [[0,0,1,1,1,0,0],[0,1,1,1,1,1,0],[1,1,3,1,3,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,0,1,0,1,0,1]],
-      [[0,0,1,1,1,0,0],[0,1,1,1,1,1,0],[1,1,3,1,3,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[0,1,0,1,0,1,0]],
-    ]
-  },
-  bunny: {
-    pal: ['#fbcfe8','#db2777','#fdf2f8'],
-    fr: [
-      [[0,1,0,0,0,1,0],[0,1,0,0,0,1,0],[0,1,1,1,1,1,0],[1,1,3,1,1,3,1],[1,1,1,2,1,1,1],[0,1,1,1,1,1,0],[0,1,0,0,0,1,0],[0,0,1,0,1,0,0]],
-      [[1,1,0,0,0,0,0],[0,1,0,0,0,1,0],[0,1,1,1,1,1,0],[1,1,3,1,1,3,1],[1,1,1,2,1,1,1],[0,1,1,1,1,1,0],[0,0,1,0,0,1,0],[0,0,0,1,1,0,0]],
-    ]
-  },
-}
-
-const _makePetCanvas = (key, flip = false, yAnim = '') => {
-  const art = PET_ART[key]
-  const rows = art.fr[0].length, cols = art.fr[0][0].length
-  const c = document.createElement('canvas')
-  c.width = cols * PET_S
-  c.height = rows * PET_S
-  c.style.cssText = `image-rendering:pixelated;display:block;${flip ? 'transform:scaleX(-1);' : ''}${yAnim ? `animation:${yAnim};` : ''}`
-  let f = 0
-  const draw = () => {
-    const ctx = c.getContext('2d')
-    ctx.clearRect(0, 0, c.width, c.height)
-    art.fr[f].forEach((row, y) => row.forEach((px, x) => {
-      if (px) { ctx.fillStyle = art.pal[px - 1]; ctx.fillRect(x * PET_S, y * PET_S, PET_S, PET_S) }
-    }))
-  }
-  draw()
-  setInterval(() => { f = (f + 1) % art.fr.length; draw() }, 380)
-  return c
-}
-
-// Section pets: attached to page sections so they scroll with the content
-// Re-called after each renderApp() to handle role-switch re-renders
-const _initSectionPets = () => {
-  // Remove any existing section pets before re-adding
-  document.querySelectorAll('[data-sp]').forEach(p => p.remove())
-
-  // side: 'top'|'bottom', val: CSS value for that side
-  const addPets = (sel, pets, noOverflowClip = false) => {
-    const section = document.querySelector(sel)
-    if (!section) return
-    if (!section.style.position) section.style.position = 'relative'
-    // Sections with overflow:hidden clip pets — punch through only when safe
-    if (noOverflowClip) section.style.overflow = 'visible'
-    pets.forEach(r => {
-      const wrap = document.createElement('div')
-      wrap.className = `pet-roamer pr-${r.dir} ${r.spd}`
-      wrap.setAttribute('data-sp', '')
-      const side = r.side || 'bottom'
-      wrap.style.cssText = `${side}:${r.val};animation-delay:${r.delay};`
-      wrap.appendChild(_makePetCanvas(r.key, r.flip, r.yAnim))
-      section.appendChild(wrap)
+    gsap.from('.hero-sub, .hero-foot, .hero-top', {
+      opacity: 0, y: 18, duration: 0.9, stagger: 0.08, ease: 'power3.out', delay: 0.7,
     })
+
+    document.querySelectorAll('.reveal').forEach((el) => {
+      gsap.to(el, {
+        autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 95%', once: true },
+      })
+    })
+
+    // Keyboard users can Tab into content whose reveal hasn't fired yet —
+    // make anything receiving focus visible immediately.
+    document.addEventListener('focusin', (e) => {
+      const r = e.target.closest('.reveal')
+      if (r && getComputedStyle(r).visibility === 'hidden') gsap.set(r, { autoAlpha: 1, y: 0 })
+    })
+  } catch (err) {
+    console.warn('Reveal animations unavailable, showing content directly', err)
+    showAllReveals()
   }
-
-  // Hero: cat and bot walk near the bottom (100vh section, no clipping issue at these positions)
-  addPets('.hero', [
-    { key:'cat', flip:false, dir:'ltr', spd:'pr-slow',   side:'bottom', val:'14%', yAnim:'', delay:'0s'  },
-    { key:'bot', flip:true,  dir:'rtl', spd:'pr-medium', side:'bottom', val:'8%',  yAnim:'', delay:'-5s' },
-  ], true) // hero has overflow:hidden — punch through so pets aren't clipped
-
-  // Cases: 12 pets spread every ~8% through the long project list.
-  addPets('.cases', [
-    { key:'duck',  flip:false, dir:'ltr', spd:'pr-medium', side:'top', val:'5%',  yAnim:'pet-bounce 1.1s ease-in-out infinite', delay:'-3s'  },
-    { key:'bot',   flip:true,  dir:'rtl', spd:'pr-medium', side:'top', val:'13%', yAnim:'',                                     delay:'-7s'  },
-    { key:'cat',   flip:false, dir:'ltr', spd:'pr-slow',   side:'top', val:'21%', yAnim:'',                                     delay:'-1s'  },
-    { key:'frog',  flip:true,  dir:'rtl', spd:'pr-slow',   side:'top', val:'29%', yAnim:'pet-jump 2.3s ease-in-out infinite',   delay:'-9s'  },
-    { key:'bunny', flip:false, dir:'ltr', spd:'pr-fast',   side:'top', val:'37%', yAnim:'pet-bounce 0.9s ease-in-out infinite', delay:'-5s'  },
-    { key:'ghost', flip:false, dir:'ltr', spd:'pr-vslow',  side:'top', val:'45%', yAnim:'pet-float 3.2s ease-in-out infinite',  delay:'-2s'  },
-    { key:'duck',  flip:true,  dir:'rtl', spd:'pr-medium', side:'top', val:'53%', yAnim:'pet-bounce 1.3s ease-in-out infinite', delay:'-11s' },
-    { key:'cat',   flip:true,  dir:'rtl', spd:'pr-slow',   side:'top', val:'61%', yAnim:'',                                     delay:'-6s'  },
-    { key:'bot',   flip:false, dir:'ltr', spd:'pr-medium', side:'top', val:'69%', yAnim:'',                                     delay:'-14s' },
-    { key:'frog',  flip:false, dir:'ltr', spd:'pr-slow',   side:'top', val:'77%', yAnim:'pet-jump 2s ease-in-out infinite',     delay:'-4s'  },
-    { key:'bunny', flip:true,  dir:'rtl', spd:'pr-fast',   side:'top', val:'85%', yAnim:'pet-bounce 1s ease-in-out infinite',   delay:'-8s'  },
-    { key:'ghost', flip:true,  dir:'rtl', spd:'pr-vslow',  side:'top', val:'93%', yAnim:'pet-float 2.8s ease-in-out infinite',  delay:'-16s' },
-  ])
-
-  // About: ghost drifts through mid-section, bunny scurries along the floor
-  addPets('.about', [
-    { key:'ghost', flip:false, dir:'ltr', spd:'pr-vslow', side:'top',    val:'38%', yAnim:'pet-float 3.2s ease-in-out infinite',  delay:'-2s' },
-    { key:'bunny', flip:true,  dir:'rtl', spd:'pr-fast',  side:'bottom', val:'6%',  yAnim:'pet-bounce 0.9s ease-in-out infinite', delay:'-7s' },
-  ])
-
-  // Experience: frog hops along the timeline
-  addPets('.experience', [
-    { key:'frog', flip:false, dir:'ltr', spd:'pr-slow', side:'bottom', val:'4%', yAnim:'pet-jump 2.2s ease-in-out infinite', delay:'-3s' },
-  ])
-
-  // Credentials: ghost drifts between education and skills
-  addPets('.credentials', [
-    { key:'ghost', flip:true, dir:'rtl', spd:'pr-vslow', side:'top', val:'30%', yAnim:'pet-float 3s ease-in-out infinite', delay:'-11s' },
-  ])
-
-  // Resumes: duck trots across the resume picker
-  addPets('.resumes', [
-    { key:'duck', flip:true, dir:'rtl', spd:'pr-medium', side:'bottom', val:'8%', yAnim:'pet-bounce 1.3s ease-in-out infinite', delay:'-9s' },
-  ])
+} else {
+  showAllReveals()
 }
-
-// Perchers sit on specific DOM elements; re-called after each renderApp()
-const _placePerchers = () => {
-  document.querySelectorAll('.pet-percher').forEach(p => p.remove())
-
-  // Cat perches on top of the hero h1.
-  // hero has overflow:visible now (set by addPets) so the cat won't be clipped.
-  const h1 = document.querySelector('.hero h1')
-  if (h1) {
-    const p = document.createElement('div')
-    p.className = 'pet-percher'
-    // bottom:100% sits the pet right above the h1's top edge
-    p.style.cssText = 'position:absolute;bottom:100%;left:3%;z-index:15;pointer-events:none;'
-    p.appendChild(_makePetCanvas('cat', false, 'pet-idle-bob 2.1s ease-in-out infinite'))
-    h1.style.position = 'relative'
-    h1.appendChild(p)
-  }
-
-  // Duck perches on the bio statement in the About section
-  const bio = document.querySelector('.bio-statement')
-  if (bio) {
-    const p = document.createElement('div')
-    p.className = 'pet-percher'
-    p.style.cssText = 'position:absolute;top:-42px;right:6%;z-index:5;pointer-events:none;'
-    p.appendChild(_makePetCanvas('duck', false, 'pet-idle-bob 2.6s ease-in-out infinite 0.5s'))
-    bio.style.position = 'relative'
-    bio.appendChild(p)
-  }
-
-  // Ghost floats above the footer email
-  const footerEmail = document.querySelector('.footer-email')
-  if (footerEmail) {
-    const p = document.createElement('div')
-    p.className = 'pet-percher'
-    p.style.cssText = 'position:absolute;bottom:110%;right:2%;z-index:5;pointer-events:none;'
-    p.appendChild(_makePetCanvas('ghost', false, 'pet-float 3.5s ease-in-out infinite'))
-    const footer = footerEmail.closest('footer')
-    if (footer) { footer.style.position = 'relative'; footer.appendChild(p) }
-  }
-}
-
-const initializePixelPets = () => {
-  _initSectionPets()
-  _placePerchers()
-}
-
-// Final bootstrap
-renderApp(true)
