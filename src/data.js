@@ -15,7 +15,7 @@ export const site = {
   status: "Open to AI, Data & ML engineering roles",
   links: [
     { label: "GitHub", url: "https://github.com/harthikrm" },
-    { label: "LinkedIn", url: "https://www.linkedin.com/in/harthikmallchetty/" },
+    { label: "LinkedIn", url: "https://www.linkedin.com/in/harthikmallichetty" },
     { label: "Medium", url: "https://medium.com/@hrmallichetty" },
   ],
 };
@@ -26,7 +26,8 @@ export const toc = [
   { no: "03", label: "Experience", href: "#experience" },
   { no: "04", label: "Writing", href: "#writing" },
   { no: "05", label: "About", href: "#about" },
-  { no: "06", label: "Contact", href: "#contact" },
+  { no: "06", label: "Featured", href: "#featured" },
+  { no: "07", label: "Contact", href: "#contact" },
 ];
 
 export const intro = {
@@ -258,12 +259,109 @@ export const about = {
   ],
 };
 
-export const resumes = [
-  { title: "Résumé — General", file: "HarthikMallichetty_Resume.pdf", primary: true },
-  { title: "Data Engineer", file: "HarthikMallichetty_DataEngineer.pdf" },
-  { title: "AI Engineer", file: "HarthikMallichetty_AIEngineer.pdf" },
-  { title: "Data Analyst", file: "HarthikMallichetty_DataAnalyst.pdf" },
-  { title: "Analytics Engineer", file: "HarthikMallichetty_AnalyticsEngineer.pdf" },
-  { title: "Quant Research Analyst", file: "HarthikMallichetty_QuantAnalyst.pdf" },
-  { title: "People Analytics", file: "HarthikMallichetty_PeopleAnalytics.pdf" },
+// ── Featured carousel ────────────────────────────────────────────
+// One continuous shelf of professional artifacts. `url: ""` renders a
+// deliberately non-interactive card (no invented links, no fake PDFs).
+// preview: { kind: "img", src } | { kind: "svg", svg } | { kind: "cover", eyebrow, lines }
+export const featured = [
+  {
+    id: "feat-resume",
+    type: "DOCUMENT",
+    title: "Résumé",
+    summary: "Single-page professional résumé covering Room, Prolifics, HeiDigi and selected systems work.",
+    status: "IN REVISION — AVAILABLE SOON",
+    url: "",
+    linkLabel: "",
+    preview: { kind: "cover", eyebrow: "CURRICULUM VITAE", lines: ["Harthik", "Mallichetty"], ruled: true },
+  },
+  {
+    id: "feat-room",
+    type: "PRODUCT",
+    title: "Room",
+    summary: "Multi-model AI workspace — GPT, Claude and Gemini working side by side from one confirmed project memory.",
+    status: "PRIVATE EARLY ACCESS",
+    url: "https://joinaroom.app",
+    linkLabel: "JOINAROOM.APP ↗",
+    preview: { kind: "svg", svg: "room" },
+  },
+  {
+    id: "feat-article-feedback",
+    type: "ARTICLE",
+    title: "When Feedback Backfires: Can Better Feedback Teach AI Agents to Game the System?",
+    summary: "Reward hacking and evaluation integrity — does precise failure feedback fix the task, or train the agent to game the grader?",
+    status: "MEDIUM — SEP 2026",
+    url: "https://medium.com/@hrmallichetty/when-feedback-backfires-can-better-feedback-teach-ai-agents-to-game-the-system-5a03d05d9262",
+    linkLabel: "READ ON MEDIUM ↗",
+    preview: { kind: "cover", eyebrow: "ESSAY — 01", lines: ["When feedback", "backfires."], serif: true },
+  },
+  {
+    id: "feat-signal",
+    type: "PRODUCT",
+    title: "Signal",
+    summary: "Natural-language Q&A over SEC filings for 70 S&P 500 companies — 10-step RAG pipeline, cited answers.",
+    status: "LIVE",
+    url: "https://signal.harthik.dev",
+    linkLabel: "SIGNAL.HARTHIK.DEV ↗",
+    preview: { kind: "img", src: "signal_financial_intelligence_platform.png", alt: "Signal — query interface over SEC filings" },
+  },
+  {
+    id: "feat-research-aeil",
+    type: "RESEARCH",
+    title: "AEIL — Agent Evaluation Integrity",
+    summary: "Working research on evaluation integrity: how feedback and reward signals teach autonomous agents to game their graders.",
+    status: "WORKING PAPER",
+    url: "",
+    linkLabel: "",
+    preview: { kind: "cover", eyebrow: "RESEARCH — AEIL", lines: ["Agent evaluation", "integrity."], ruled: true },
+  },
+  {
+    id: "feat-article-arc",
+    type: "ARTICLE",
+    title: "From Code Review to ARC-AGI-2: Reusing the Same ML Muscle on a Harder Reasoning Problem",
+    summary: "What fine-tuning Code Sentinel taught me, applied to abstract reasoning on ARC-AGI-2.",
+    status: "MEDIUM — OCT 2026",
+    url: "https://medium.com/@hrmallichetty/from-code-review-to-arc-agi-2-reusing-the-same-ml-muscle-on-a-harder-reasoning-problem-a4be66501d3b",
+    linkLabel: "READ ON MEDIUM ↗",
+    preview: { kind: "cover", eyebrow: "ESSAY — 02", lines: ["Code review →", "ARC-AGI-2."], serif: true },
+  },
+  {
+    id: "feat-research-arc",
+    type: "RESEARCH",
+    title: "ARC-AGI-2 — Abstract Reasoning",
+    summary: "ARC Prize 2026 entry: applying the fine-tuning discipline behind Code Sentinel to abstract reasoning.",
+    status: "RESEARCH IN PROGRESS",
+    url: "",
+    linkLabel: "",
+    preview: { kind: "cover", eyebrow: "ARC PRIZE 2026", lines: ["Abstract", "reasoning."], ruled: true },
+  },
+  {
+    id: "feat-research-gemma",
+    type: "RESEARCH",
+    title: "Gemma 4 Developer Agent",
+    summary: "Developer agent built for Kaggle's Gemma 4 Developer Agent competition.",
+    status: "IN PROGRESS",
+    url: "",
+    linkLabel: "",
+    preview: { kind: "cover", eyebrow: "KAGGLE", lines: ["Gemma 4", "developer agent."], ruled: true },
+  },
+  {
+    id: "feat-github",
+    type: "PROFILE",
+    title: "GitHub",
+    summary: "18 public repositories — AI systems, data engineering, analytics.",
+    status: "@HARTHIKRM",
+    url: "https://github.com/harthikrm",
+    linkLabel: "GITHUB.COM/HARTHIKRM ↗",
+    preview: { kind: "cover", eyebrow: "PROFILE", lines: ["github /", "harthikrm"], plain: true },
+  },
+  {
+    id: "feat-linkedin",
+    type: "PROFILE",
+    title: "LinkedIn",
+    summary: "Professional profile, experience and recommendations.",
+    status: "PROFILE",
+    url: "https://www.linkedin.com/in/harthikmallichetty",
+    linkLabel: "LINKEDIN ↗",
+    preview: { kind: "cover", eyebrow: "PROFILE", lines: ["linkedin /", "harthikmallichetty"], plain: true },
+  },
 ];

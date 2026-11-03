@@ -4,7 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { inject } from '@vercel/analytics'
 import {
   site, toc, intro, work, archive, experience,
-  education, programs, writing, competitions, about, resumes,
+  education, programs, writing, competitions, about, featured,
 } from './data'
 
 inject()
@@ -277,18 +277,54 @@ const renderAbout = () => `
         </div>
       </div>
 
-      <div class="resume-block reveal">
-        <div class="archive-head">
-          <h3 class="mono">RÉSUMÉ — BY ROLE</h3>
-          <span class="mono mono-dim">PDF</span>
-        </div>
-        <div class="resume-list">
-          ${resumes.map((r) => `
-            <a class="resume-row ${r.primary ? 'primary' : ''}" href="/resumes/${r.file}" download>
-              <span class="rt">${esc(r.title)}</span>
-              <span class="mono">↓ PDF</span>
-            </a>`).join('')}
-        </div>
+    </div>
+  </section>`
+
+// ── Featured carousel ────────────────────────────────────────────
+const renderPreview = (p, title) => {
+  if (p.kind === 'img')
+    return `<img src="/projects/${p.src}" alt="${esc(p.alt || title)}" loading="lazy" width="1280" height="800" draggable="false">`
+  if (p.kind === 'svg') return FIGURES[p.svg]
+  return `
+    <div class="fc-cover ${p.plain ? 'plain' : ''} ${p.ruled ? 'ruled' : ''}">
+      <span class="mono mono-dim">${esc(p.eyebrow || '')}</span>
+      <span class="fc-cover-lines ${p.serif ? 'serif-accent' : ''}">${p.lines.map(esc).join('<br>')}</span>
+    </div>`
+}
+
+const renderCard = (f) => {
+  const body = `
+    <div class="fc-preview">${renderPreview(f.preview, f.title)}</div>
+    <div class="fc-body">
+      <div class="fc-meta mono"><span>${esc(f.type)}</span><span class="mono-dim">${esc(f.status)}</span></div>
+      <h3 class="fc-title">${esc(f.title)}</h3>
+      <p class="fc-sum">${esc(f.summary)}</p>
+      ${f.url
+        ? `<span class="fc-action mono">${esc(f.linkLabel)}</span>`
+        : `<span class="fc-action mono mono-dim">NOT YET PUBLIC</span>`}
+    </div>`
+  return f.url
+    ? `<a class="fc-card" href="${f.url}" target="_blank" rel="noopener noreferrer" aria-label="${esc(f.title)} — ${esc(f.type.toLowerCase())}">${body}</a>`
+    : `<article class="fc-card is-static">${body}</article>`
+}
+
+const renderFeatured = () => `
+  <section id="featured">
+    <div class="container section-head">
+      <h2 class="section-title">Featured <span class="serif-accent">artifacts</span></h2>
+      <span class="mono mono-dim">/06 — P.06</span>
+    </div>
+    <div class="container fc-sub">
+      <span class="mono mono-dim">RÉSUMÉ · RESEARCH · WRITING · PRODUCTS · PROFILES — ${featured.length} ITEMS</span>
+      <span style="display:flex;gap:16px;align-items:center">
+        <span class="mono mono-dim fc-hint">[ DRAG OR HOVER TO PAUSE ]</span>
+        <button type="button" class="fc-pause" aria-pressed="false" aria-controls="fc-region">PAUSE</button>
+      </span>
+    </div>
+    <div class="fc-viewport" id="fc-region" role="region" aria-label="Featured work carousel">
+      <div class="fc-track">
+        <div class="fc-group">${featured.map(renderCard).join('')}</div>
+        <div class="fc-group fc-clone" aria-hidden="true" inert>${featured.map(renderCard).join('')}</div>
       </div>
     </div>
   </section>`
@@ -298,13 +334,12 @@ const renderContact = () => `
     <div class="container">
       <div class="section-head" style="margin-bottom:clamp(40px,6vh,80px)">
         <span class="mono" style="color:inherit">DIRECT ACCESS</span>
-        <span class="mono" style="opacity:.5">/06 — P.06</span>
+        <span class="mono" style="opacity:.5">/07 — P.07</span>
       </div>
       <h2 class="contact-head">Let's build<br><em>something real.</em></h2>
       <a class="contact-email" href="mailto:${site.email}">${site.email}</a>
       <div class="contact-links">
         ${site.links.map((l) => `<a class="mono" href="${l.url}" target="_blank" rel="noopener noreferrer">${l.label.toUpperCase()} ↗</a>`).join('')}
-        <a class="mono" href="/resumes/${resumes[0].file}" download>RÉSUMÉ ↓</a>
       </div>
       <div class="contact-foot mono">
         <span>© 2026 HARTHIK MALLICHETTY</span>
@@ -318,7 +353,7 @@ const renderContact = () => `
 document.querySelector('#app').innerHTML = [
   renderHeader(), '<main id="main">', renderHero(), renderIntro(),
   renderWork(), renderExperience(), renderWriting(), renderAbout(),
-  '</main>', renderContact(),
+  renderFeatured(), '</main>', renderContact(),
 ].join('')
 
 // ── Behaviour ────────────────────────────────────────────────────
@@ -348,7 +383,7 @@ const indicator = document.getElementById('section-indicator')
 const sections = [
   ['intro', '/01 INTRO'], ['statement', '/01 INTRO'], ['work', '/02 WORK'],
   ['experience', '/03 EXPERIENCE'], ['writing', '/04 WRITING'],
-  ['about', '/05 ABOUT'], ['contact', '/06 CONTACT'],
+  ['about', '/05 ABOUT'], ['featured', '/06 FEATURED'], ['contact', '/07 CONTACT'],
 ]
 const io = new IntersectionObserver((entries) => {
   entries.forEach((en) => {
@@ -403,3 +438,129 @@ if (!reducedMotion) {
 } else {
   showAllReveals()
 }
+
+// ── Featured carousel engine ─────────────────────────────────────
+// Seamless infinite drift: track holds two identical groups; offset wraps
+// by one group-width, so the loop never visibly resets. Clone group is
+// aria-hidden + inert (no duplicate announcements, no focus trap).
+const initCarousel = () => {
+  const section = document.getElementById('featured')
+  const viewport = section?.querySelector('.fc-viewport')
+  const track = section?.querySelector('.fc-track')
+  const group = section?.querySelector('.fc-group')
+  if (!viewport || !track || !group) return
+
+  if (reducedMotion) {
+    // No auto-movement: native horizontal scrolling over the single group.
+    section.querySelector('.fc-clone')?.remove()
+    viewport.classList.add('fc-manual')
+    const hint = section.querySelector('.fc-hint')
+    if (hint) hint.textContent = '[ SCROLL TO BROWSE ]'
+    section.querySelector('.fc-pause')?.remove() // nothing to pause
+    return
+  }
+
+  const SPEED = 26 // px per second — quiet, not distracting
+  let offset = 0
+  let groupW = 0
+  let hovered = false
+  let focused = false
+  let dragging = false
+  let inView = false
+  let lastT = null
+  let moved = 0
+  let userPaused = false
+
+  // Persistent pause control — keyboard- and touch-reachable (WCAG 2.2.2)
+  const pauseBtn = section.querySelector('.fc-pause')
+  pauseBtn?.addEventListener('click', () => {
+    userPaused = !userPaused
+    pauseBtn.setAttribute('aria-pressed', String(userPaused))
+    pauseBtn.textContent = userPaused ? 'PLAY' : 'PAUSE'
+  })
+
+  const measure = () => { groupW = group.getBoundingClientRect().width }
+  measure()
+  new ResizeObserver(measure).observe(group)
+
+  const wrap = () => {
+    if (groupW <= 0) return
+    offset = -(((-offset % groupW) + groupW) % groupW)
+  }
+  const apply = () => { track.style.transform = `translate3d(${offset}px,0,0)` }
+
+  const step = (t) => {
+    if (lastT !== null) {
+      const dt = Math.min((t - lastT) / 1000, 0.1) // clamp: no jump after tab switch
+      if (inView && !userPaused && !hovered && !focused && !dragging && !document.hidden && groupW > viewport.clientWidth) {
+        offset -= SPEED * dt
+        wrap()
+        apply()
+      }
+    }
+    lastT = t
+    requestAnimationFrame(step)
+  }
+  requestAnimationFrame(step)
+
+  new IntersectionObserver((e) => { inView = e[0].isIntersecting }, { rootMargin: '60px' }).observe(section)
+
+  // Hover / focus pause
+  viewport.addEventListener('pointerenter', () => { hovered = true })
+  viewport.addEventListener('pointerleave', () => { hovered = false })
+  viewport.addEventListener('focusin', (e) => {
+    focused = true
+    // Bring the focused card fully into view (it may be translated off-screen).
+    const card = e.target.closest('.fc-card')
+    if (card) {
+      const pad = 24
+      const vw = viewport.clientWidth
+      const left = card.offsetLeft + offset
+      const right = left + card.offsetWidth
+      if (left < 0) offset += pad - left
+      else if (right > vw) offset -= right - vw + pad
+      wrap()
+      apply()
+    }
+  })
+  viewport.addEventListener('focusout', () => { focused = false })
+
+  // Drag / swipe (pointer events cover mouse + touch; vertical page scroll stays native)
+  let startX = 0
+  let startOffset = 0
+  viewport.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0 && e.pointerType === 'mouse') return
+    dragging = true
+    moved = 0
+    startX = e.clientX
+    startOffset = offset
+    viewport.classList.add('fc-dragging')
+  })
+  viewport.addEventListener('pointermove', (e) => {
+    if (!dragging) return
+    const dx = e.clientX - startX
+    moved = Math.max(moved, Math.abs(dx))
+    if (moved > 8) { try { viewport.setPointerCapture(e.pointerId) } catch { /* stale pointer */ } }
+    offset = startOffset + dx
+    wrap()
+    apply()
+  })
+  const endDrag = () => {
+    dragging = false
+    viewport.classList.remove('fc-dragging')
+  }
+  // Window-level: a release outside the viewport must still end the drag.
+  window.addEventListener('pointerup', endDrag)
+  window.addEventListener('pointercancel', endDrag)
+
+  // A real drag should not trigger the card's link on release.
+  // e.detail > 0 keeps keyboard-synthesized clicks (detail 0) working.
+  viewport.addEventListener('click', (e) => {
+    if (moved > 8 && e.detail > 0) {
+      e.preventDefault()
+      e.stopPropagation()
+      moved = 0
+    }
+  }, true)
+}
+initCarousel()
