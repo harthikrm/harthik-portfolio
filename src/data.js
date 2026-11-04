@@ -330,7 +330,7 @@ export const featured = [
     title: "ARC-AGI-2 — Abstract Reasoning",
     summary: "ARC Prize 2026 paper: solver-in-the-loop curation of synthetic tasks by likelihood band — and why held-out loss is the wrong signal.",
     status: "PAPER — NOV 2026",
-    url: "https://github.com/harthikrm/arc-prize-2026-paper/blob/main/paper/arc2026_let_the_solver_choose_its_data.pdf",
+    url: "/papers/arc2026_let_the_solver_choose_its_data.pdf",
     linkLabel: "READ PAPER ↗",
     preview: { kind: "svg", svg: "arc" },
   },
