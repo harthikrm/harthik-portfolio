@@ -48,11 +48,11 @@ export const work = [
     meta: "2026 — PRESENT · AI ENGINEER & FOUNDER",
     status: "PRIVATE EARLY ACCESS",
     statement:
-      "Explain yourself once. Work with whichever AI you want. Room is a multi-model AI workspace that keeps a project's confirmed decisions, constraints and context available across conversations — so GPT, Claude and Gemini work side by side from the same understanding.",
+      "Explain yourself once. Work with whichever AI you want. Room is a multi-model AI workspace that preserves important project decisions and context across independent AI conversations, so developers can work with different models without repeatedly explaining their projects.",
     points: [
-      "Streams up to three LLMs in parallel over SSE with targeted @-routing, fault isolation and server-side cancellation — running on your own OpenRouter key.",
-      "PostgreSQL-backed project memory that extracts source-linked decisions, constraints and facts. Nothing becomes authoritative without user confirmation.",
-      "Secure multi-tenant persistence on Supabase with Row-Level Security, transactional updates and retry-safe recovery.",
+      "Built a multi-model AI workspace using Next.js, TypeScript and OpenRouter, streaming up to three LLMs in parallel through Server-Sent Events (SSE), with targeted routing, failure isolation and server-side cancellation.",
+      "Engineered a source-linked project-memory system that extracts decisions, constraints and facts into PostgreSQL, allowing users to approve what becomes shared knowledge across independent AI conversations.",
+      "Implemented secure multi-tenant persistence with Supabase Row-Level Security, transactional updates and retry-safe recovery; validated through 971 automated tests and controlled memory, continuity and prompt-injection evaluations.",
     ],
     stats: [
       { k: "AUTOMATED TESTS", v: "971" },
@@ -73,11 +73,11 @@ export const work = [
     meta: "2025 · FINANCIAL INTELLIGENCE · END-TO-END BUILD",
     status: "LIVE",
     statement:
-      "Hours of SEC-filing research, compressed into seconds of natural-language Q&A across 70 S&P 500 companies.",
+      "Signal is an AI-powered financial research platform that turns company filings and market data into accessible, source-grounded answers to natural-language questions.",
     points: [
-      "10-step RAG pipeline with a self-correcting LangGraph reasoning agent; answers cite back to the underlying filings.",
-      "Data foundation on GCP — Airflow-orchestrated ingestion of SEC EDGAR filings and market data into PostgreSQL.",
-      "Three-layer dbt transformations computing 65 financial metrics per company.",
+      "Built a financial research platform combining SEC filings, company fundamentals and market data for 70 S&P 500 companies, enabling natural-language analysis of financial performance and business risks.",
+      "Engineered Airflow-orchestrated ingestion pipelines, dbt transformations and PostgreSQL/pgvector retrieval, calculating 65 financial metrics per company and supporting source-grounded financial analysis.",
+      "Developed a 10-step retrieval-augmented generation (RAG) workflow with LangGraph and finance-specific embeddings, connecting retrieval, AI reasoning and citations in a deployed application on Google Cloud.",
     ],
     stats: [
       { k: "REQUESTS / FIRST 30 DAYS", v: "800+" },
@@ -99,11 +99,11 @@ export const work = [
     title: "Code Sentinel",
     meta: "2026 · LLM FINE-TUNING & MLOPS",
     statement:
-      "A fine-tuned Mistral-7B that writes first-pass code review on every pull request — and outscores GPT-4o-mini doing it.",
+      "Code Sentinel is a fine-tuned AI code reviewer that generates first-pass feedback on pull requests, connecting custom language-model training with an automated GitHub review workflow.",
     points: [
-      "Fine-tuned Mistral-7B-Instruct on 143K real code-review pairs with QLoRA on an NVIDIA H100 — under 1% of parameters trained.",
-      "6.1% higher BERTScore F1 than GPT-4o-mini on held-out review generation.",
-      "Deployed as a FastAPI inference service on Vertex AI, with a GitHub Action that posts model-generated review comments on every PR.",
+      "Fine-tuned Mistral-7B-Instruct on 143K code-review examples using QLoRA and parameter-efficient training on an NVIDIA H100, adapting the model to generate actionable code-review feedback.",
+      "Evaluated the fine-tuned model against GPT-4o-mini on held-out review generation, achieving a 6.1% relative improvement in BERTScore F1.",
+      "Deployed model inference through FastAPI and Vertex AI, integrating GitHub Actions to automatically generate review comments on pull requests.",
     ],
     stats: [
       { k: "TRAINING PAIRS", v: "143K" },
@@ -121,12 +121,15 @@ export const work = [
     id: "mylonite",
     title: "Mylonite",
     meta: "RESEARCH · CONCURRENCY TESTING",
+    // Repo is public at github.com/harthikrm/mylonite (built + evaluated per its
+    // README) — entry kept at IN DEVELOPMENT pending the user's go-ahead to upgrade.
     status: "IN DEVELOPMENT",
     statement:
-      "Metamorphic testing for concurrent systems — hunting the bugs that only appear between the threads.",
+      "Mylonite is an experimental concurrency-testing tool that uncovers bugs caused by the order in which concurrent operations reach shared state — failures that conventional tests can miss.",
     points: [
-      "An independent research project applying metamorphic testing to concurrency: generating semantically equivalent interleavings and flagging divergent behaviour.",
-      "Current findings are experimental and unvalidated. This entry will grow as results hold up.",
+      "Developing a concurrency-testing tool for services that keep shared state in Redis or Valkey: a delay-only proxy controls the order in which store commands execute, surfacing race conditions and lost updates that unit tests and memory race detectors miss.",
+      "Comparing execution behavior under controlled schedule variations, with a written per-target contract and a plain-code oracle — never the model — deciding whether an outcome is a bug.",
+      "Designing reproducible experiments — every candidate bug is replayed from a recorded schedule — to evaluate bug-detection effectiveness, execution efficiency, and the trade-offs of AI-guided test selection against non-AI baselines.",
     ],
     stats: [],
     stack: "",
@@ -138,14 +141,14 @@ export const work = [
 
 export const archive = [
   { title: "Quant Risk Desk", field: "Quant / Risk", stack: "Python · Pandas · SQL · Tableau", url: "https://github.com/harthikrm/quant-risk-desk" },
-  { title: "F1 Race Intelligence", field: "Data Engineering", stack: "Python · PostgreSQL · FastAPI · React", url: "https://github.com/harthikrm/f1-race-intelligence" },
+  { title: "F1 Race Intelligence", field: "Data Engineering", stack: "Python · DuckDB · XGBoost · Streamlit", url: "https://github.com/harthikrm/f1-race-intelligence" },
   { title: "Global Supply Chain Intelligence", field: "ML / Graph", stack: "Python · NetworkX", url: "https://github.com/harthikrm/global-supply-chain-intelligence" },
-  { title: "Smart Home IoT Analytics", field: "ML / Telemetry", stack: "Python · MQTT · Grafana", url: "https://github.com/harthikrm/smart-home-analytics" },
+  { title: "Smart Home IoT Analytics", field: "ML / Telemetry", stack: "Python · Scikit-Learn · SQL", url: "https://github.com/harthikrm/smart-home-analytics" },
   { title: "NLP Fake News Detection", field: "Deep Learning", stack: "TensorFlow · Transformers", url: "" },
-  { title: "Merchant Credit Risk", field: "ML / Fraud", stack: "SQL · Python · Tableau", url: "https://github.com/harthikrm/merchant-credit-risk-fraud-monitoring" },
+  { title: "Merchant Credit Risk", field: "ML / Fraud", stack: "SQL · Python · XGBoost · Power BI", url: "https://github.com/harthikrm/merchant-credit-risk-fraud-monitoring" },
   { title: "Recruiting & People Systems Analytics", field: "People Analytics", stack: "Power BI · SQL · Python", url: "https://github.com/harthikrm/recruiting-funnel-analytics" },
   { title: "ATS Data Integrity & SLA Monitoring", field: "Data Quality", stack: "Python · PostgreSQL · Power BI", url: "https://github.com/harthikrm/data-integrity-sla-monitoring-framework" },
-  { title: "Customer Churn Analysis", field: "ML / Retention", stack: "Python · Scikit-Learn", url: "https://github.com/harthikrm/churn-analytics-project" },
+  { title: "Customer Churn Analysis", field: "Analytics / Retention", stack: "SQL", url: "https://github.com/harthikrm/churn-analytics-project" },
   { title: "Retail Sales Forecasting", field: "Forecasting", stack: "Python · Statsmodels", url: "" },
   { title: "Job Search Automation Pipeline", field: "AI / Automation", stack: "Python · GPT-4o · n8n · Docker", url: "" },
 ];
@@ -157,11 +160,12 @@ export const experience = [
     period: "MAY 2026 — PRESENT",
     roles: [
       {
-        title: "AI Engineer & Founder",
+        title: "Founder & AI Engineer",
         period: "",
         points: [
-          "Building a multi-model AI workspace: parallel LLM streaming over SSE, a user-confirmed project-memory pipeline on PostgreSQL, and an LLM evaluation suite — validated by 971 automated tests.",
-          "Live at joinaroom.app; the app is in private early access.",
+          "Founded and independently developed Room, a full-stack AI workspace designed to preserve project knowledge across multiple models and independent conversations.",
+          "Architected parallel LLM orchestration, user-confirmed project memory and secure PostgreSQL persistence, using controlled evaluations and automated testing to validate reliability.",
+          "Deployed the application to private staging, verified live multi-model interactions and source-attributed memory retrieval, and launched the public Room website for early-access interest.",
         ],
       },
     ],
@@ -175,17 +179,17 @@ export const experience = [
         title: "Associate Data Engineer",
         period: "JUN 2023 — JUL 2024",
         points: [
-          "Designed and deployed a TensorFlow-based sprint-risk prediction service as a Flask REST API, giving 15+ engineering managers one to two weeks' advance visibility into at-risk sprints.",
-          "Built SQL ETL pipelines integrating 250K+ Jira and QA records into datasets for risk modelling and analytics.",
-          "Integrated risk predictions into dashboards for delivery teams of 200+ developers, with documentation and onboarding.",
+          "Developed SQL ETL pipelines consolidating 250K+ Jira and QA records into structured datasets for engineering analytics, sprint-risk prediction and delivery reporting.",
+          "Built and deployed a TensorFlow-based sprint-risk prediction service through a Flask REST API, giving engineering managers advance visibility into potentially delayed or problematic sprints.",
+          "Integrated predictive insights into engineering dashboards used by delivery teams supporting 200+ developers, enabling consistent monitoring of sprint health, defects and delivery performance.",
         ],
       },
       {
-        title: "Data Engineer Intern",
+        title: "Data Engineering Intern",
         period: "FEB 2023 — MAY 2023",
         points: [
-          "Consolidated 100K+ Jira and PostgreSQL records into reusable engineering analytics datasets through SQL ETL pipelines.",
-          "Standardised sprint-health, defect-trend and delivery KPIs, giving QA and delivery teams one shared reporting framework.",
+          "Developed SQL ETL pipelines processing 100K+ PostgreSQL and engineering records into reusable analytics datasets for sprint health and quality reporting.",
+          "Standardized defect, delivery and sprint-performance metrics to improve reporting consistency and support data-quality validation.",
         ],
       },
     ],
@@ -199,8 +203,8 @@ export const experience = [
         title: "Data Analyst Intern",
         period: "",
         points: [
-          "Automated KPI reporting for 20+ marketing campaigns using Python and SQL, standardising measurement.",
-          "Analysed campaign experiments to find top audiences and creatives, contributing to 20% higher ROI and 18% higher CTR.",
+          "Automated KPI tracking and reporting across 20+ digital marketing campaigns using Python and SQL, consolidating campaign performance into actionable analytics.",
+          "Analyzed audience segments, advertising creatives and campaign experiments to identify optimization opportunities, contributing to a reported 20% improvement in ROI and 18% increase in click-through rate.",
         ],
       },
     ],
