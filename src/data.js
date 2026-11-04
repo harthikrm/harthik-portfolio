@@ -214,13 +214,13 @@ export const experience = [
 export const education = [
   {
     school: "University of Texas at Dallas",
-    degree: "MS, Business Analytics & Artificial Intelligence",
+    degree: "Master of Science, Business Analytics and Artificial Intelligence",
     detail: "Scholar With Distinction · GPA 3.8/4.0",
     date: "MAY 2026",
   },
   {
     school: "GITAM University",
-    degree: "BTech, Computer Science & Business Systems",
+    degree: "Bachelor of Technology, Computer Science and Business Systems",
     detail: "GPA 8.52/10",
     date: "APR 2024",
   },
@@ -247,9 +247,9 @@ export const writing = [
 ];
 
 export const competitions = [
-  { name: "ARC Prize 2026", detail: "ARC-AGI-2" },
-  { name: "Kaggle", detail: "Gemma 4 Developer Agent Competition" },
-  { name: "Meta Global AI Developer Hackathon", detail: "2026" },
+  { name: "ARC AGI 2", detail: "2026" },
+  { name: "Gemma 4 Developer Agent", detail: "2026" },
+  { name: "Meta Global AI Hackathon", detail: "2026" },
 ];
 
 export const about = {
