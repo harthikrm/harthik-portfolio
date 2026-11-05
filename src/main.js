@@ -269,6 +269,7 @@ const renderFeatured = () => `
       <span class="mono mono-dim">RÉSUMÉ · RESEARCH · WRITING · PRODUCTS · PROFILES — ${featured.length} ITEMS</span>
       <span style="display:flex;gap:16px;align-items:center">
         <span class="mono mono-dim fc-hint">[ DRAG OR HOVER TO PAUSE ]</span>
+        <button type="button" class="fc-speed" aria-controls="fc-region" aria-label="Carousel speed: 1x — click to change">1×</button>
         <button type="button" class="fc-pause" aria-pressed="false" aria-controls="fc-region">PAUSE</button>
       </span>
     </div>
@@ -408,6 +409,7 @@ const initCarousel = () => {
     const hint = section.querySelector('.fc-hint')
     if (hint) hint.textContent = '[ SCROLL TO BROWSE ]'
     section.querySelector('.fc-pause')?.remove() // nothing to pause
+    section.querySelector('.fc-speed')?.remove() // nothing to speed up
     return
   }
 
@@ -421,6 +423,7 @@ const initCarousel = () => {
   let lastT = null
   let moved = 0
   let userPaused = false
+  let speedMult = 1
 
   // Persistent pause control — keyboard- and touch-reachable (WCAG 2.2.2)
   const pauseBtn = section.querySelector('.fc-pause')
@@ -428,6 +431,14 @@ const initCarousel = () => {
     userPaused = !userPaused
     pauseBtn.setAttribute('aria-pressed', String(userPaused))
     pauseBtn.textContent = userPaused ? 'PLAY' : 'PAUSE'
+  })
+
+  // Speed control — cycles 1× → 2× → 4×
+  const speedBtn = section.querySelector('.fc-speed')
+  speedBtn?.addEventListener('click', () => {
+    speedMult = speedMult >= 4 ? 1 : speedMult * 2
+    speedBtn.textContent = `${speedMult}×`
+    speedBtn.setAttribute('aria-label', `Carousel speed: ${speedMult}x — click to change`)
   })
 
   const measure = () => { groupW = group.getBoundingClientRect().width }
@@ -444,7 +455,7 @@ const initCarousel = () => {
     if (lastT !== null) {
       const dt = Math.min((t - lastT) / 1000, 0.1) // clamp: no jump after tab switch
       if (inView && !userPaused && !hovered && !focused && !dragging && !document.hidden && groupW > viewport.clientWidth) {
-        offset -= SPEED * dt
+        offset -= SPEED * speedMult * dt
         wrap()
         apply()
       }

@@ -876,6 +876,27 @@ a.archive-row:hover .mono-dim {
   padding-bottom: 14px;
 }
 
+.fc-speed {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.02em;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+}
+
+.fc-speed:hover {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
 .fc-pause {
   font-family: var(--font-mono);
   font-size: 11.5px;
