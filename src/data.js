@@ -234,6 +234,8 @@ export const education = [
 
 export const programs = [
   "McKinsey.org Forward Program — 2026",
+  "Anthropic — Claude 101 — 2026",
+  "Anthropic — AI Fluency: Framework & Foundations — 2026",
   "IBM Data Analytics Academic Internship — 2023",
 ];
 
