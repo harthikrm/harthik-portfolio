@@ -837,7 +837,8 @@ a.archive-row:hover .mono-dim {
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
-  margin: calc(-1 * clamp(24px, 5vh, 64px)) 0 26px;
+  /* auto keeps the row centered with .container's own margin once max-width caps */
+  margin: calc(-1 * clamp(24px, 5vh, 64px)) auto 26px;
 }
 
 .fc-viewport {

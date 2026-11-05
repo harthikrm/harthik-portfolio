@@ -269,8 +269,8 @@ const renderFeatured = () => `
       <span class="mono mono-dim">RÉSUMÉ · RESEARCH · WRITING · PRODUCTS · PROFILES — ${featured.length} ITEMS</span>
       <span style="display:flex;gap:16px;align-items:center">
         <span class="mono mono-dim fc-hint">[ DRAG OR HOVER TO PAUSE ]</span>
-        <button type="button" class="fc-speed" aria-controls="fc-region" aria-label="Carousel speed: 1x — click to change">1×</button>
         <button type="button" class="fc-pause" aria-pressed="false" aria-controls="fc-region">PAUSE</button>
+        <button type="button" class="fc-speed" aria-controls="fc-region" aria-label="Carousel speed: 1x — click to change">1×</button>
       </span>
     </div>
     <div class="fc-viewport" id="fc-region" role="region" aria-label="Featured work carousel">
